@@ -1,0 +1,214 @@
+body {
+  z-index:0;
+  font-family: Trebuchet MS;
+}
+
+#sidebar {
+  position: absolute;
+  /*background-color: rgba(255, 255, 255, 0.5);*/
+  background-color: rgba(0, 0, 0, 0.8);
+  width: 350px;
+  left: 0px;
+  top: 0px;
+  bottom: 0px;
+  z-index: 0;
+  padding: 20px;
+  font-family: Trebuchet MS;
+}
+
+#buttons {
+  position: absolute;
+  bottom: 40px;
+  border-radius: 5px;
+  padding: 10px;
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.buttons {
+  display: inline-block;
+  z-index: 1;
+  bottom: 40px;
+  font-family: Trebuchet MS;
+  padding: 5px 20px;
+  border-style: hidden;
+}
+
+#button-next {
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+#button-previous {
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+#slideName {
+  position: absolute;
+  left: 20px;
+  color:rgb(255, 255, 255);
+}
+
+#pageNumber {
+  position: absolute;
+  box-sizing: border-box;
+  background-color: rgba(255, 255, 255, 0.4);
+  color: rgba(255, 255, 255, 0.7);
+  border-radius: 5px;
+  padding: 5px 10px;
+  right: 70px;
+  bottom: 50px;
+  font-size: 12px;
+}
+
+.discription {
+  position: absolute;
+  top: 100px;
+  color: rgb(255, 255, 255);
+  font-size: 15px;
+  width:78%;
+  text-align: left;
+  opacity: 0.75;
+}
+
+.legend {
+  position: absolute;
+  left: 400px;
+  padding: 20px;
+  box-sizing: border-box;
+  z-index: 10;
+  font-family: Trebuchet MS;
+  font-size: 12px;
+  background-color: rgba(255, 255, 255, 0.7);
+  border-radius: 5px;
+}
+.legend-item {
+  vertical-align: middle;
+}
+
+.circle1 {
+  display: inline-block;
+  border-radius: 50%;
+  z-index: 10;
+  vertical-align: middle;
+  text-align: center;
+  margin-top: 5px;
+  background-color:rgba(244, 203, 66, 0.2);
+  border: 1px solid #f4cb42;
+}
+
+#bedroom1 {
+  height: 20px;
+  width: 20px;
+}
+
+#bedrooms2 {
+  height: 25px;
+  width: 25px;
+}
+
+#bedrooms3 {
+  height: 30px;
+  width: 30px;
+}
+
+#bedrooms4 {
+  height: 35px;
+  width: 35px;
+}
+
+.circle2 {
+  height: 10px;
+  width: 10px;
+  display: inline-block;
+  border-radius: 50%;
+  z-index: 10;
+  vertical-align: middle;
+  text-align: center;
+  margin-top: 5px;
+}
+
+#below20 {
+  background-color: rgb(244, 203, 66);
+  border: 6px solid rgba(244, 203, 66, 0.2);
+  background-clip: content-box;
+}
+
+#between20and40 {
+  background-color: rgb(249, 154, 67);
+  border: 6px solid rgba(249, 154, 67, 0.2);
+  background-clip: content-box;
+}
+
+#between40and60 {
+  background-color: rgb(249, 115, 67);
+  border: 6px solid rgba(249, 115, 67, 0.2);
+  background-clip: content-box;
+}
+
+#above60 {
+  background-color: rgb(181, 42, 7);
+  border: 6px solid rgba(181, 42, 7, 0.2);
+  background-clip: content-box;
+}
+
+
+#upTo6 {
+  background-color: rgb(207, 207, 209);
+  border: 6px solid rgba(207, 207, 209, 0.2);
+  background-clip: content-box;
+}
+
+#between7and10 {
+  background-color: rgb(166, 166, 168);
+  border: 6px solid rgba(166, 166, 168, 0.2);
+  background-clip: content-box;
+}
+
+#between11and20 {
+  background-color: rgb(109, 109, 109);
+  border: 6px solid rgba(109, 109, 109, 0.2);
+  background-clip: content-box;
+}
+
+#above20 {
+  background-color: rgb(51, 51, 51);
+  border: 6px solid rgba(51, 51, 51, 0.2);
+  background-clip: content-box;
+}
+
+
+#before1990 {
+  background-color: rgba(91, 130, 127, 0.8);
+  border: 6px solid rgba(91, 130, 127, 0.2);
+  background-clip: content-box;
+}
+
+#between90and00 {
+  background-color: rgba(119, 168, 165, 0.8);
+  border: 6px solid rgba(119, 168, 165, 0.2);
+  background-clip: content-box;
+}
+
+#between00and10 {
+  background-color: rgba(144, 204, 200, 0.8);
+  border: 6px solid rgba(144, 204, 200, 0.2);
+  background-clip: content-box;
+}
+
+#after10 {
+  background-color: rgba(171, 242, 238, 0.8);
+  border: 6px solid rgba(171, 242, 238, 0.2);
+  background-clip: content-box;
+}
+
+#map > div.leaflet-map-pane > div.leaflet-objects-pane > div.leaflet-popup-pane > div {
+  font-family: Trebuchet MS;
+}
+
+#map > div.leaflet-map-pane > div.leaflet-objects-pane > div.leaflet-popup-pane > div > a {
+  z-index: 100;
+}
+
+#map > div.leaflet-map-pane > div.leaflet-objects-pane > div.leaflet-popup-pane > div > div.leaflet-popup-content-wrapper {
+  opacity: 0.85;
+}
