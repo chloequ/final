@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    <!-- CSS Imports -->
+    <link rel="stylesheet" href="css/leaflet.css" />
+    <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/3.15/themes/css/cartodb.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.9/leaflet.draw.css" />
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <!-- Sidebar -->
+    <div class="sidebar" id="leftbar">
+      <nav class="navbar navbar-default">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <h2>Basic Information</h2>
+            <div class="input-group">
+              <input id="station_id" type="text"
+                     class="form-control"
+                     placeholder="Station ID"
+                     disabled>
+             <input id="address" type="text"
+                    class="form-control"
+                    placeholder="Address"
+                    disabled>
+            <input id="zipcode" type="text"
+                   class="form-control"
+                   placeholder="Zipcode"
+                   disabled>
+            <input id="bikeNumber" type="text"
+                   class="form-control"
+                   placeholder="Number of Avaiable Bikes"
+                   disabled>
+             <input id="dockNumber" type="text"
+                    class="form-control"
+                    placeholder="Docking Capacity"
+                    disabled>
+            <h2>Micro Statistics</h2>
+             <input id="total_num_rides" type="text"
+                    class="form-control"
+                    placeholder="Total Number of Rides"
+                    disabled>
+            <input id="std_rides" type="text"
+                   class="form-control"
+                   placeholder="Standardized Number of Rides"
+                   disabled>
+            <input id="tll_per" type="text"
+                   class="form-control"
+                   placeholder="Percentage of All Indego Rides"
+                   disabled>
+            <input id="arrival" type="text"
+                   class="form-control"
+                   placeholder="Arrival: # %"
+                   disabled>
+             <input id="departure" type="text"
+                    class="form-control"
+                    placeholder="Departure: # %"
+                    disabled>
+            </div>
+            <h2>Macro Statistics</h2>
+            <div class="input-group">
+              <input id="total" type="text"
+                     class="form-control"
+                     placeholder="Total Indego Rides in 2016"
+                     disabled>
+             <input id="mean" type="text"
+                    class="form-control"
+                    placeholder="Average Annual Rides Per Station"
+                    disabled>
+              <button id="min">MIN</button>
+              <button id="max">MAX</button>
+              <!-- <input class="minmax" id="min" type="text"
+                     class="form-control"
+                     placeholder="MIN"
+                     disabled>
+             <input class="minmax" id="max" type="text"
+                    class="form-control"
+                    placeholder="MAX"
+                    disabled> -->
+            </div>
+          </div>
+        </div>
+      </nav>
+      <div class="container-fluid">
+        <ul id="project-list" class="list-group">
+        </ul>
+      </div>
+    </div>
+
+    <div class="sidebar" id="rightbar">
+      <nav class="navbar navbar-default">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <h2>Customize Your Filter</h2>
+            <h4>Input your filter range of rides count</h4>
+             <input class="num_rides" id="low_num_rides" type="number"
+                    class="form-control"
+                    placeholder="Lower Limit">
+            To
+            <input class="num_rides" id="high_num_rides" type="number"
+                   class="form-control"
+                   placeholder="Higher Limit">
+             <div class="dropdown">
+                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                  Select Type of Trip
+                  <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                  <li><a href="#" id="option1">One Way</a></li>
+                  <li><a href="#" id="option2">Round Trip</a></li>
+                  <li role="separator" class="divider"></li>
+                  <li><a href="#" id="option3">All Types</a></li>
+                </ul>
+              </div>
+              <button id="filter">Filter</button>
+              <button id="reset">Reset</button>
+            </div>
+          </div>
+        </div>
+      </nav>
+      <div class="container-fluid">
+        <ul id="project-list" class="list-group">
+        </ul>
+      </div>
+    </div>
+    <!-- Map -->
+    <div id="map" class="map">
+      <div id="time-window"></div>
+    </div>
+    <!-- Javascript Imports -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="js/underscore.js"></script>
+    <script src="js/leaflet.js"></script>
+    <script src="http://libs.cartocdn.com/cartodb.js/v3/3.15/cartodb.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.9/leaflet.draw.js"></script>
+    <script src="js/decode.js"></script>
+    <script src="js/numStyle.js"></script>
+    <script src="js/setup.js"></script>
+  </body>
+</html>
