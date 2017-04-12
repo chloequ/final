@@ -28,3 +28,5 @@ var plotStation = function(markers){
     marker.addTo(map);
   });
 };
+
+var downloadClean = $.ajax("https://raw.githubusercontent.com/chloequ/final/master/data/cleanData.json");
