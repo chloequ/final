@@ -93,7 +93,6 @@ var fillForm = function(properties) {
   $('#std_rides').val("Standardized Number of Rides: " + properties.std_rides);
   $('#address').val("Address: " + properties.addressstreet);
   $('#zipcode').val("Zipcode: "+properties.addresszipcode);
-  $('#bikeNumber').val("Number of Available Bikes: " + properties.bikesavailable);
   $('#dockNumber').val("Docking Capacity: " + properties.totaldocks);
   $('#tll_per').val("Percentage of All Indego Rides: " + properties.ttl_per);
   $('#station_id').val("Station ID: " + properties.station_id);
@@ -123,6 +122,29 @@ var fillForm = function(properties) {
   var minFeature;
   var maxFeature;
   var theSelected;
+  var minMarker;
+  var maxMarker;
+
+// variables for mapping routes
+  var mystart;
+  var myend;
+  var mylocation;
+  var myObject;
+  var myJSON;
+  var myURL;
+  var routeResponse;
+  var myCoordinates;
+  var myStartRoute;
+  var myEndRoute;
+  // var myRoutes=[];
+  var startMarker;
+  // var startMarkers=[];
+  var endMarker;
+  // var endMakers=[];
+
+//variables for mapping hottest pairs
+  var pair;
+  var top10s=[];
 
 var general=function(){
   app.jsonClient.execute("SELECT SUM(total_num_rides) FROM cleandata_all_geom_new")
@@ -148,26 +170,16 @@ general();
 
   var setDefault = function(){
     app.map.setView([39.957042, -75.175922], 13);
-    app.geojsonClient.execute("SELECT * FROM cleandata_all_geom_new") // 'LIMIT' should be added to the end of this line
-      .done(function(data) {
+    app.geojsonClient.execute("SELECT * FROM cleandata_all_geom_new").done(function(data) {
         defaultLayer=L.geoJson(data, {
           pointToLayer: function(feature, latlng) {
-            return L.circleMarker(latlng,
-              numStyle(feature)
-              // { radius: 6,
-              //   color: '#9ba1aa',
-              //   weight: 5,
-              //   opacity: 0,
-              //   fillColor: '#9ba1aa',
-              //   fillOpacity: 0.5,
-              //   popupAnchor:[-100,-100] }
-              );
+            return L.circleMarker(latlng,numStyle(feature));
           },
           onEachFeature: function(feature, layer) {
-            if (feature.properties.total_num_rides===min){
+            if (feature.properties.total_num_rides===min) {
               minFeature=feature;
             }
-            if (feature.properties.total_num_rides===max){
+            if (feature.properties.total_num_rides===max) {
               maxFeature=feature;
             }
             layer.on('mouseover', function(l) {
@@ -179,37 +191,87 @@ general();
                   opacity: 0,
                   fillColor: '#9ba1aa',
                   fillOpacity: 0.8,
-                  // popupAnchor:[-100,-100]
                 });
                 // layer.bindPopup(layer.feature.properties.station_id).openPopup();
               }
-
             });
             layer.on('mouseout', function(l){
               if (theSelected===undefined || theSelected._leaflet_id!==l.target._leaflet_id) {
                 layer.setStyle(numStyle(feature));
               }
-
-              //   {radius: 6,
-              //    color: '#9ba1aa',
-              //    weight: 5,
-              //    opacity: 0,
-              //    fillColor: '#9ba1aa',
-              //    fillOpacity: 0.5,
-              // //  popupAnchor:[-100,-100]
-              //   }
             });
             layer.on('click', function(l) {
-              if (theSelected !== undefined)
+              //map out the possible most popular routes
+              //as startstation
+              app.jsonClient.execute("SELECT start_lat,start_lon,end_lat,end_lon,start_station_id,end_station_id,count(*) AS count FROM indego_all_clean WHERE start_station_id="+feature.properties.station_id+"GROUP BY 1,2,3,4,5,6 ORDER BY count DESC LIMIT 1")
+              .done(function(data){
+                mystart={"lat":data.rows[0].start_lat, "lon":data.rows[0].start_lon};
+                myend={"lat":data.rows[0].end_lat,"lon":data.rows[0].end_lon};
+                mylocation=[mystart,myend];
+                myObject = {
+                  "locations": mylocation,
+                  "costing":"bicycle",
+                  "directions_options":{"units":"miles"}
+                };
+                myJSON = JSON.stringify(myObject);
+                myURL =
+                "https://matrix.mapzen.com/optimized_route?json=" + myJSON + "&api_key=mapzen-bE4GcSs";
+                routeResponse = $.ajax(myURL);
+                routeResponse.done(function(data){
+                  myCoordinates = decode(data.trip.legs[0].shape);
+                  if (myStartRoute!==undefined){
+                    app.map.removeLayer(myStartRoute);
+                  }
+                  myStartRoute=L.polyline(myCoordinates, {color: '#f4d142'});
+                  myStartRoute.addTo(app.map);
+                });
+                if (endMarker!==undefined){
+                  app.map.removeLayer(endMarker);
+                }
+                endMarker=L.circleMarker([data.rows[0].end_lat,data.rows[0].end_lon],endStyle);
+                endMarker.addTo(app.map);
+              });
+              //as endstation
+              app.jsonClient.execute("SELECT start_lat,start_lon,end_lat,end_lon,start_station_id,end_station_id,count(*) AS count FROM indego_all_clean WHERE end_station_id="+feature.properties.station_id+"GROUP BY 1,2,3,4,5,6 ORDER BY count DESC LIMIT 1")
+              .done(function(data){
+                mystart={"lat":data.rows[0].start_lat, "lon":data.rows[0].start_lon};
+                myend={"lat":data.rows[0].end_lat,"lon":data.rows[0].end_lon};
+                mylocation=[mystart,myend];
+                myObject = {
+                  "locations": mylocation,
+                  "costing":"bicycle",
+                  "directions_options":{"units":"miles"}
+                };
+                myJSON = JSON.stringify(myObject);
+                myURL =
+                "https://matrix.mapzen.com/optimized_route?json=" + myJSON + "&api_key=mapzen-bE4GcSs";
+                routeResponse = $.ajax(myURL);
+                routeResponse.done(function(data){
+                  myCoordinates = decode(data.trip.legs[0].shape);
+                  if (myEndRoute!==undefined){
+                    app.map.removeLayer(myEndRoute);
+                  }
+                  myEndRoute=L.polyline(myCoordinates, {color: '#f4d142'});
+                  myEndRoute.addTo(app.map);
+                });
+                if (startMarker!==undefined){
+                  app.map.removeLayer(startMarker);
+                }
+                startMarker=L.circleMarker([data.rows[0].start_lat,data.rows[0].start_lon],startStyle);
+                startMarker.addTo(app.map);
+              });
+                // });
+              //ends here
               fillForm(feature.properties);
+              $('#leftbar').show();
+              $('#stationInfo').show();
+              $('#indivStats').show();
               layer.setStyle(selectedStyle);
-              console.log("the L", l);
-              console.log("last L", theSelected);
               if (theSelected) {
                 if (l.target._leaflet_id === theSelected._leaflet_id) { layer.setStyle(numStyle(feature));}
                 else {theSelected.setStyle(numStyle(theSelected.feature));}
-                theSelected = undefined;
-                return;
+                // theSelected = undefined;
+                // // return;
               }
               theSelected = l.target;
               // if (theSelected) {theSelected.setStyle(numStyle(feature));}
@@ -217,11 +279,12 @@ general();
             });
           }
         });
-        defaultLayer.addTo(app.map);});
+        defaultLayer.addTo(app.map);
+      });
+  };
         // .error(function(filterNumber) {if(filterNumber === undefined || typeof(filterNumber)!== Number){
         //   alert("Please input an integer to filter displayed stations!");
         // }});
-  };
   var setFilter = function(){
     // $('#filter').click(function(e){
     //   execution = "SELECT * FROM cleandata_geom WHERE num_rides>"+$('#filter').val();
@@ -261,21 +324,20 @@ general();
         .error(function(lowFilterNumber) {if(lowFilterNumber === undefined || typeof(lowFilterNumber)!== Number || hiFilterNumber === undefined || typeof(hiFilterNumber)!== Number){
           alert("Please input integers to create a filter range!");
         }});
-
-
-        // L.tooltip({sticky: true},myStations).addTo(app.map);
-        // myStations.bindTooltip("my tooltip").openTooltip();
-
-        // L.geoJson(data, {
-        //   onEachFeature: function(feature, layer) {
-        //     layer.on('click', function() {
-        //       fillForm(feature.properties);
-        //       app.map.setView([feature.properties.station_lat, feature.properties.station_lon],15);
-        //     });
-        //     feature.bindPopup('mytooltip').openPopup();
-        //   }
-        // }).addTo(app.map);
   };
+
+  // var getTop10= function(){
+  //     app.jsonClient.execute("SELECT start_lat, start_lon, end_lat, end_lon,start_station_id, end_station_id, COUNT(*)AS count FROM indego_all_clean GROUP BY 1,2,3,4,5,6 ORDER BY count DESC LIMIT 10")
+  //     .done(function(data){
+  //       console.log(data);
+  //       _.each(data.rows,function(coordinates){
+  //        pair=L.polyline([[coordinates.start_lat,coordinates.start_lon],[coordinates.end_lat,coordinates.end_lon]], top10Style);
+  //        pair.addTo(app.map);
+  //        top10s.push(pair);
+  //      });
+  //     });
+  // };
+  // getTop10();
 
   $(document).ready(function(){
     $('#option1').click(function(e){
@@ -292,19 +354,68 @@ general();
   setDefault();
 
   $('#min').click(function(e){
+    minMarker=L.circleMarker([minFeature.properties.station_lat,minFeature.properties.station_lon],
+    { radius:25,
+      color: '#9ba1aa',
+      weight: 5,
+      opacity: 0.5,
+      fillColor: '#9ba1aa',
+      fillOpacity: 0.1 });
+    minMarker.addTo(app.map);
+    minMarker.on('mouseover', function(l){
+      minMarker.setStyle( {radius: 15,
+        color: '#9ba1aa',
+        weight: 5,
+        opacity: 0,
+        fillColor: '#9ba1aa',
+        fillOpacity: 0.8});
+    });
+    minMarker.on('mouseout', function(l){
+      minMarker.setStyle( {radius:25,
+        color: '#9ba1aa',
+        weight: 5,
+        opacity: 0.5,
+        fillColor: '#9ba1aa',
+        fillOpacity: 0.1});
+    });
+    fillForm(minFeature.properties);
+    app.map.setView([minFeature.properties.station_lat, minFeature.properties.station_lon],15);
     if(filterLayer !== undefined) {
       defaultLayer.addTo(app.map);
     }
-    fillForm(minFeature.properties);
-    app.map.setView([minFeature.properties.station_lat, minFeature.properties.station_lon],15);
+
   });
 
   $('#max').click(function(e){
+    maxMarker=L.circleMarker([maxFeature.properties.station_lat,maxFeature.properties.station_lon],
+    { radius:25,
+      color: '#9ba1aa',
+      weight: 5,
+      opacity: 0.5,
+      fillColor: '#9ba1aa',
+      fillOpacity: 0.1 });
+    maxMarker.addTo(app.map);
+    maxMarker.on('mouseover', function(l){
+      maxMarker.setStyle( {radius: 15,
+        color: '#9ba1aa',
+        weight: 5,
+        opacity: 0,
+        fillColor: '#9ba1aa',
+        fillOpacity: 0.8});
+    });
+    maxMarker.on('mouseout', function(l){
+      maxMarker.setStyle( {radius:25,
+        color: '#9ba1aa',
+        weight: 5,
+        opacity: 0.5,
+        fillColor: '#9ba1aa',
+        fillOpacity: 0.1});
+    });
+    fillForm(maxFeature.properties);
+    app.map.setView([maxFeature.properties.station_lat, maxFeature.properties.station_lon],15);
     if(filterLayer !== undefined) {
       defaultLayer.addTo(app.map);
     }
-    fillForm(maxFeature.properties);
-    app.map.setView([maxFeature.properties.station_lat, maxFeature.properties.station_lon],15);
   });
 
   $('#filter').click(function(e){
@@ -323,10 +434,62 @@ general();
     if(filterLayer!==undefined){
       app.map.removeLayer(filterLayer);
     }
+    if(minMarker!==undefined){
+      app.map.removeLayer(minMarker);
+    }
+    if(maxMarker!==undefined){
+      app.map.removeLayer(maxMarker);
+    }
+    if(myStartRoute!==undefined){
+      app.map.removeLayer(myStartRoute);
+    }
+    if(myEndRoute!==undefined){
+      app.map.removeLayer(myEndRoute);
+    }
+    if(endMarker!==undefined){
+      app.map.removeLayer(endMarker);
+    }
+    if(startMarker!==undefined){
+      app.map.removeLayer(startMarker);
+    }
     app.map.removeLayer(defaultLayer);
     setDefault();
   });
 
+  // var mystart;
+  // var myend;
+  // var mylocation;
+  // var myObject;
+  // var myJSON;
+  // var myURL;
+  // var routeResponse;
+  // var myCoordinates;
+  // var myRoute;
+
+  // app.jsonClient.execute("SELECT start_lat, start_lon, end_lat, end_lon,start_station_id, end_station_id, COUNT(*)AS count FROM indego_all_clean WHERE NOT start_station_id=end_station_id GROUP BY 1,2,3,4,5,6 ORDER BY count DESC LIMIT 1")
+  // .done(function(data){
+  //   console.log(data);
+  //       _.each(data.rows,function(latlon){
+  //         mystart={"lat":latlon.start_lat, "lon":latlon.start_lon};
+  //         myend={"lat":latlon.end_lat,"lon":latlon.end_lon};
+  //         mylocation=[mystart,myend];
+  //         console.log(mylocation);
+  //         myObject = {
+  //           "locations": mylocation,
+  //           "costing":"bicycle",
+  //           "directions_options":{"units":"miles"}
+  //         };
+  //         myJSON = JSON.stringify(myObject);
+  //         myURL =
+  //         "https://matrix.mapzen.com/optimized_route?json=" + myJSON + "&api_key=mapzen-bE4GcSs";
+  //         routeResponse = $.ajax(myURL);
+  //         routeResponse.done(function(data){
+  //           myCoordinates = decode(data.trip.legs[0].shape);
+  //           myRoute=L.polyline(myCoordinates, {color: '#f4d142'});
+  //           myRoute.addTo(app.map);
+  //         });
+  //       });
+  // });
   // app.geojsonClient.execute("SELECT * FROM bike_network") // 'LIMIT' should be added to the end of this line
   //   .done(function(data) {
   //     L.geoJson(data,{
@@ -349,15 +512,15 @@ general();
   //   .error(function(errors) {
   //   });
 
-  var mystart;
-  var myend;
-  var mylocation;
-  var myObject;
-  var myJSON;
-  var myURL;
-  var routeResponse;
-  var myCoordinates;
-  var myRoute;
+  // var mystart;
+  // var myend;
+  // var mylocation;
+  // var myObject;
+  // var myJSON;
+  // var myURL;
+  // var routeResponse;
+  // var myCoordinates;
+  // var myRoute;
 
 
   // app.jsonClient.execute("SELECT start_lat, start_lon, end_lat, end_lon FROM indego_all_clean WHERE NOT start_lat=end_lat OR NOT start_lon=end_lon LIMIT 2")
@@ -406,9 +569,9 @@ app.map.addControl(
 
 // Handling the creation of Leaflet.Draw layers
 // Note the use of drawnLayerID - this is the way you should approach remembering and removing layers
-var drawnLayerID;
-app.map.on('draw:created', function (e) {
-  var type = e.layerType;
-  var layer = e.layer;
-  console.log('draw created:', e);
-});
+// var drawnLayerID;
+// app.map.on('draw:created', function (e) {
+//   var type = e.layerType;
+//   var layer = e.layer;
+//   console.log('draw created:', e);
+// });
