@@ -15,7 +15,7 @@
     <!-- topbar -->
     <div class="topbar">
       <ul class="nav nav-pills">
-        <li role="presentation" class="active" id="firstButton" onclick="document.getElementById('map > div.leaflet-control-container > div.leaflet-top.leaflet-left').style.color = 'red'"><a href="#">Macro Stats</a></li>
+        <li role="presentation" id="firstButton"><a href="#">Macro Stats</a></li>
         <li role="presentation"><a href="#" id="secondButton">Individual Stats</a></li>
         <li role="presentation"><a href="#" id="thirdButton">Customized Filter</a></li>
         <li role="presentation">
@@ -39,7 +39,7 @@
         <div class="container-fluid">
           <div class="navbar-header">
             <div class="subdiv" id="macroStats" hidden="hidden">
-              <h2>Macro Stats</h2>
+              <h3>Macro Stats</h3>
               <button class="hideIt" id="hideIt1">Hide</button>
               <div class="input-group">
                 <input id="total" type="text"
@@ -50,8 +50,8 @@
                       class="form-control"
                       placeholder="Average Annual Rides Per Station"
                       disabled>
-                <button id="min">MIN</button>
-                <button id="max">MAX</button>
+                <button class="minmax" id="min">MIN</button>
+                <button class="minmax" id="max">MAX</button>
               </div>
               <!-- <input class="minmax" id="min" type="text"
                      class="form-control"
@@ -63,7 +63,7 @@
                     disabled> -->
             </div>
             <div class="subdiv" id="stationInfo" hidden="hidden">
-              <h2>Station Info</h2>
+              <h3>Station Info</h3>
               <button class="hideIt" id="hideIt2">Hide</button>
               <div class="input-group">
                 <input id="station_id" type="text"
@@ -85,7 +85,7 @@
               </div>
             </div>
             <div class="subdiv" id="indivStats" hidden="hidden">
-              <h2>Individual Stats</h2>
+              <h3>Individual Stats</h3>
               <div class="input-group">
                  <input id="total_num_rides" type="text"
                         class="form-control"
@@ -123,9 +123,9 @@
       <nav class="navbar navbar-default">
         <div class="container-fluid">
           <div class="navbar-header">
-            <h2>Customize Your Filter</h2>
+            <h3>Customize Your Filter</h3>
             <button class="hideIt" id="hideIt3">Hide</button>
-            <h4>Input your filter range of rides count</h4>
+            <h5>Input your filter range of rides count</h5>
              <input class="num_rides" id="low_num_rides" type="number"
                     class="form-control"
                     placeholder="Lower Limit">
@@ -145,8 +145,8 @@
                   <li><a href="#" id="option3">All Types</a></li>
                 </ul>
               </div>
-              <button id="filter">Filter</button>
-              <button id="reset">Reset</button>
+              <button class="button" id="filter">Filter</button>
+              <button class="button" id="reset">Reset</button>
             </div>
           </div>
         </div>

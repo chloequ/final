@@ -46,6 +46,14 @@ body {
   width: 340px;
 }
 
+.input-group .form-control {
+    position: relative;
+    z-index: 2;
+    float: left;
+    width: 100%;
+    margin-top: 10px;
+}
+
 #rightbar {
   right: 0px;
   width: 280px;
@@ -114,4 +122,13 @@ body {
 
 .minmax {
   width: 100px;
+  margin-top:10px;
+}
+
+.button {
+  margin-top:10px;
+}
+
+.dropdown {
+  margin-top:10px;
 }
