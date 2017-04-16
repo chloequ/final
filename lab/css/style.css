@@ -4,6 +4,13 @@ body {
     font-family: Trebuchet MS;
 }
 
+h3 {
+    display: inline-block;
+}
+Inherited from body
+style.css:1
+
+
 #time-window {
     position: absolute;
     right: 10px;

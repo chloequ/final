@@ -1,6 +1,6 @@
 var state1=0;
 var state2=0;
-var state3=0;w
+var state3=0;
 $('#firstButton').click(function(e){
   state2=0;
   // $('#firstButton').css("background-color","blue");
@@ -33,22 +33,33 @@ $('#secondButton').click(function(e){
 });
 
 $('#thirdButton').click(function(e){
-  $('#rightbar').show();
+  if (state3===1){
+    $('#rightbar').hide();
+    state3=0;
+  }
+  else{
+    $('#rightbar').show();
+    state3=1;
+  }
 });
+
 
 $('#hideIt1').click(function(e){
   $('#macroStats').hide();
   $('#leftbar').hide();
+  state1=0;
 });
 
 $('#hideIt2').click(function(e){
   $('#indivStats').hide();
   $('#stationInfo').hide();
   $('#leftbar').hide();
+  state2=0;
 });
 
 $('#hideIt3').click(function(e){
   $('#rightbar').hide();
+  state3=0;
 });
 
 var dest;
