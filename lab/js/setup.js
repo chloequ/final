@@ -192,8 +192,9 @@ general();
                   fillColor: '#9ba1aa',
                   fillOpacity: 0.8,
                 });
-                // layer.bindPopup(layer.feature.properties.station_id).openPopup();
+                layer.bindTooltip("Station ID: "+layer.feature.properties.station_id,{opacity: 0.7, offset:[-10,0], direction:'left'}).openTooltip();
               }
+              // layer.bindPopup(layer.feature.properties.station_id).openPopup();
             });
             layer.on('mouseout', function(l){
               if (theSelected===undefined || theSelected._leaflet_id!==l.target._leaflet_id) {
@@ -266,6 +267,7 @@ general();
               $('#leftbar').show();
               $('#stationInfo').show();
               $('#indivStats').show();
+              $('#macroStats').hide();
               layer.setStyle(selectedStyle);
               if (theSelected) {
                 if (l.target._leaflet_id === theSelected._leaflet_id) { layer.setStyle(numStyle(feature));}
@@ -313,6 +315,7 @@ general();
                 fillColor: '#9ba1aa',
                 fillOpacity: 0.8,
               });
+              layer.bindTooltip("Station ID: "+layer.feature.properties.station_id,{opacity: 0.7, offset:[-10,0], direction:'left'}).openTooltip();
               // layer.bindPopup(layer.feature.properties.station_id).openPopup();
             });
             layer.on('mouseout', function(){
@@ -569,9 +572,9 @@ app.map.addControl(
 
 // Handling the creation of Leaflet.Draw layers
 // Note the use of drawnLayerID - this is the way you should approach remembering and removing layers
-// var drawnLayerID;
-// app.map.on('draw:created', function (e) {
-//   var type = e.layerType;
-//   var layer = e.layer;
-//   console.log('draw created:', e);
-// });
+var drawnLayerID;
+app.map.on('draw:created', function (e) {
+  var type = e.layerType;
+  var layer = e.layer;
+  console.log('draw created:', e);
+});

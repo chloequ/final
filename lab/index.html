@@ -4,7 +4,8 @@
   <head>
     <meta charset="utf-8">
     <!-- CSS Imports -->
-    <link rel="stylesheet" href="css/leaflet.css" />
+    <!-- <link rel="stylesheet" href="css/leaflet.css" /> -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" />
     <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/3.15/themes/css/cartodb.css" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.9/leaflet.draw.css" />
@@ -15,6 +16,7 @@
     <!-- topbar -->
     <div class="topbar">
       <ul class="nav nav-pills">
+        <li role="presentation" id="mapping"><a href="#">Maps</a></li>
         <li role="presentation" id="firstButton"><a href="#">Macro Stats</a></li>
         <li role="presentation"><a href="#" id="secondButton">Individual Stats</a></li>
         <li role="presentation"><a href="#" id="thirdButton">Customized Filter</a></li>
@@ -170,7 +172,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <script src="js/underscore.js"></script>
-    <script src="js/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
+    <!-- <script src="js/leaflet.js"></script> -->
     <script src="http://libs.cartocdn.com/cartodb.js/v3/3.15/cartodb.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.9/leaflet.draw.js"></script>
     <script src="js/decode.js"></script>
