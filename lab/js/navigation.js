@@ -7,6 +7,7 @@ $('#firstButton').click(function(e){
   if (state1===1){
     $('#leftbar').hide();
     state1=0;
+    $('#map > div.leaflet-control-container > div.leaflet-top.leaflet-left').css("left","20px");
   }
   else{
     $('#macroStats').show();
@@ -14,6 +15,7 @@ $('#firstButton').click(function(e){
     $('#stationInfo').hide();
     $('#leftbar').show();
     state1=1;
+    $('#map > div.leaflet-control-container > div.leaflet-top.leaflet-left').css("left","360px");
   }
 });
 
@@ -22,6 +24,7 @@ $('#secondButton').click(function(e){
   if (state2===1){
     $('#leftbar').hide();
     state2=0;
+    $('#map > div.leaflet-control-container > div.leaflet-top.leaflet-left').css("left","20px");
   }
   else{
     $('#macroStats').hide();
@@ -29,6 +32,7 @@ $('#secondButton').click(function(e){
     $('#stationInfo').show();
     $('#leftbar').show();
     state2=1;
+    $('#map > div.leaflet-control-container > div.leaflet-top.leaflet-left').css("left","360px");
   }
 });
 
@@ -48,6 +52,7 @@ $('#hideIt1').click(function(e){
   $('#macroStats').hide();
   $('#leftbar').hide();
   state1=0;
+  $('#map > div.leaflet-control-container > div.leaflet-top.leaflet-left').css("left","20px");
 });
 
 $('#hideIt2').click(function(e){
@@ -55,6 +60,7 @@ $('#hideIt2').click(function(e){
   $('#stationInfo').hide();
   $('#leftbar').hide();
   state2=0;
+  $('#map > div.leaflet-control-container > div.leaflet-top.leaflet-left').css("left","20px");
 });
 
 $('#hideIt3').click(function(e){

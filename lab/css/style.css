@@ -120,7 +120,8 @@ style.css:1
 #map > div.leaflet-control-container > div.leaflet-top.leaflet-left{
   position: relative;
   top:60px;
-  left: 360px;
+  /*left: 360px;*/
+  left:20px;
 }
 
 .num_rides {
