@@ -344,13 +344,37 @@ general();
 
   $(document).ready(function(){
     $('#option1').click(function(e){
-      $('#dropdownMenu1').text($('#option1').text());
+      $('#dropdownMenu1').html($('#option1').text()+' <span class="caret"></span>');
     });
     $('#option2').click(function(e){
-      $('#dropdownMenu1').text($('#option2').text());
+      $('#dropdownMenu1').html($('#option2').text()+' <span class="caret"></span>');
     });
     $('#option3').click(function(e){
-      $('#dropdownMenu1').text($('#option3').text());
+      $('#dropdownMenu1').html($('#option3').text()+' <span class="caret"></span>');
+    });
+    $('#option4').click(function(e){
+      $('#dropdownMenu1').html($('#option4').text()+' <span class="caret"></span>');
+    });
+    $('#option5').click(function(e){
+      $('#dropdownMenu1').html($('#option5').text()+' <span class="caret"></span>');
+    });
+    $('#option6').click(function(e){
+      $('#dropdownMenu1').html($('#option6').text()+' <span class="caret"></span>');
+    });
+    $('#option7').click(function(e){
+      $('#dropdownMenu1').html($('#option7').text()+' <span class="caret"></span>');
+    });
+    $('#option8').click(function(e){
+      // $('#dropdownMenu2').text($('#option8').text());
+      $('#dropdownMenu2').html($('#option8').text()+' <span class="caret"></span>');
+    });
+    $('#option9').click(function(e){
+      // $('#dropdownMenu2').text($('#option9').text());
+      $('#dropdownMenu2').html($('#option9').text()+' <span class="caret"></span>');
+    });
+    $('#option10').click(function(e){
+      // $('#dropdownMenu2').text($('#option10').text());
+      $('#dropdownMenu2').html($('#option10').text()+' <span class="caret"></span>');
     });
   });
 
