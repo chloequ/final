@@ -3,7 +3,7 @@ var state2=0;
 var state3=0;
 $('#firstButton').click(function(e){
   state2=0;
-  // $('#firstButton').css("background-color","blue");
+  $('#firstButton').css("background-color","blue");
   if (state1===1){
     $('#leftbar').hide();
     state1=0;

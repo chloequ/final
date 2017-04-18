@@ -168,6 +168,8 @@ var general=function(){
 };
 general();
 
+
+  var filterState=0;
   var setDefault = function(){
     app.map.setView([39.957042, -75.175922], 13);
     app.geojsonClient.execute("SELECT * FROM cleandata_all_geom_new").done(function(data) {
@@ -284,13 +286,7 @@ general();
         defaultLayer.addTo(app.map);
       });
   };
-        // .error(function(filterNumber) {if(filterNumber === undefined || typeof(filterNumber)!== Number){
-        //   alert("Please input an integer to filter displayed stations!");
-        // }});
   var setFilter = function(){
-    // $('#filter').click(function(e){
-    //   execution = "SELECT * FROM cleandata_geom WHERE num_rides>"+$('#filter').val();
-    // });
     app.geojsonClient.execute(execution) // 'LIMIT' should be added to the end of this line
       .done(function(data) {
         // L.geoJson(data, {
@@ -324,9 +320,11 @@ general();
           }
         });
       filterLayer.addTo(app.map);})
-      .error(function(lowFilterNumber) {if(lowFilterNumber === undefined || typeof(lowFilterNumber)!== Number || hiFilterNumber === undefined || typeof(hiFilterNumber)!== Number && filterState===0){
-        alert("Please input integers to create a filter range!");
-        setDefault();
+      .error(function() {if(filterState===0){
+        if(typeof(lowFilterNumber)!==Number || typeof(hiFilterNumber)!==Number){
+          alert("Please select a filter range or input integers to create a customized filter range!");
+          setDefault();
+        }
       }});
   };
 
@@ -342,8 +340,6 @@ general();
   //     });
   // };
   // getTop10();
-
-  var filterState=0;
 
   $(document).ready(function(){
     $('#option1').click(function(e){
