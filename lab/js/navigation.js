@@ -71,17 +71,29 @@ $('#hideIt3').click(function(e){
 var dest;
 var getDest;
 var locationMarker;
+var locationMarkers=[];
 $('#explore').click(function(e){
-  dest=$('#destination').val();
-  getDest = "https://search.mapzen.com/v1/search?text=" + dest +  "&boundary.circle.lon=-75.157929&boundary.circle.lat=39.984400&boundary.circle.radius=20&api_key=mapzen-bE4GcSs&size=1";
-  geocoding = $.ajax(getDest).done(function(data){
-    console.log(data);
-    app.map.setView([data.features[0].geometry.coordinates[1], data.features[0].geometry.coordinates[0]],15);
-    locationMarker=L.circleMarker([data.features[0].geometry.coordinates[1], data.features[0].geometry.coordinates[0]]);
-    locationMarker.addTo(app.map);
-  });
+  if($('#destination').val()===""){
+    alert("Oops! Your forgot to input your destination!");
+  }
+  else{
+    dest=$('#destination').val();
+    getDest = "https://search.mapzen.com/v1/search?text=" + dest +  "&boundary.circle.lon=-75.157929&boundary.circle.lat=39.984400&boundary.circle.radius=15&api_key=mapzen-bE4GcSs&size=1";
+    geocoding = $.ajax(getDest).done(function(data){
+      console.log(data);
+      app.map.setView([data.features[0].geometry.coordinates[1], data.features[0].geometry.coordinates[0]],15);
+      locationMarker=L.circleMarker([data.features[0].geometry.coordinates[1], data.features[0].geometry.coordinates[0]]);
+      locationMarkers.push(locationMarker);
+      locationMarker.addTo(app.map);
+    });
+  }
 });
 $('#clear').click(function(e){
-  $('#destination').val("");
-  app.map.removeLayer(locationMarker);
+  if($('#destination').val()!==""){
+    $('#destination').val("");
+    _.each(locationMarkers,function(locationMarker){
+      app.map.removeLayer(locationMarker);
+    });
+  }
+
 });

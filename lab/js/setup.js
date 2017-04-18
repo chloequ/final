@@ -323,10 +323,11 @@ general();
             });
           }
         });
-        filterLayer.addTo(app.map);})
-        .error(function(lowFilterNumber) {if(lowFilterNumber === undefined || typeof(lowFilterNumber)!== Number || hiFilterNumber === undefined || typeof(hiFilterNumber)!== Number){
-          alert("Please input integers to create a filter range!");
-        }});
+      filterLayer.addTo(app.map);})
+      .error(function(lowFilterNumber) {if(lowFilterNumber === undefined || typeof(lowFilterNumber)!== Number || hiFilterNumber === undefined || typeof(hiFilterNumber)!== Number && filterState===0){
+        alert("Please input integers to create a filter range!");
+        setDefault();
+      }});
   };
 
   // var getTop10= function(){
@@ -342,39 +343,59 @@ general();
   // };
   // getTop10();
 
+  var filterState=0;
+
   $(document).ready(function(){
     $('#option1').click(function(e){
+    $('#option0').click(function(e){
+      $('#dropdownMenu1').html("Select filter range for rides count"+' <span class="caret"></span>');
+      filterState=0;
+    });
       $('#dropdownMenu1').html($('#option1').text()+' <span class="caret"></span>');
+      filterState=1;
     });
     $('#option2').click(function(e){
       $('#dropdownMenu1').html($('#option2').text()+' <span class="caret"></span>');
+      filterState=1;
     });
     $('#option3').click(function(e){
       $('#dropdownMenu1').html($('#option3').text()+' <span class="caret"></span>');
+      filterState=1;
     });
     $('#option4').click(function(e){
       $('#dropdownMenu1').html($('#option4').text()+' <span class="caret"></span>');
+      filterState=1;
     });
     $('#option5').click(function(e){
       $('#dropdownMenu1').html($('#option5').text()+' <span class="caret"></span>');
+      filterState=1;
     });
     $('#option6').click(function(e){
       $('#dropdownMenu1').html($('#option6').text()+' <span class="caret"></span>');
+      filterState=1;
     });
     $('#option7').click(function(e){
       $('#dropdownMenu1').html($('#option7').text()+' <span class="caret"></span>');
+      filterState=1;
+    });
+    $('#option00').click(function(e){
+      $('#dropdownMenu2').html("Select Type of Trip"+' <span class="caret"></span>');
+      filterState=0;
     });
     $('#option8').click(function(e){
       // $('#dropdownMenu2').text($('#option8').text());
       $('#dropdownMenu2').html($('#option8').text()+' <span class="caret"></span>');
+      filterState=1;
     });
     $('#option9').click(function(e){
       // $('#dropdownMenu2').text($('#option9').text());
       $('#dropdownMenu2').html($('#option9').text()+' <span class="caret"></span>');
+      filterState=1;
     });
     $('#option10').click(function(e){
       // $('#dropdownMenu2').text($('#option10').text());
       $('#dropdownMenu2').html($('#option10').text()+' <span class="caret"></span>');
+      filterState=1;
     });
   });
 
