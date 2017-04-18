@@ -95,5 +95,20 @@ $('#clear').click(function(e){
       app.map.removeLayer(locationMarker);
     });
   }
+});
 
+$('#rough').click(function(e){
+  $('#avgRange').fadeToggle("slow");
+  $('#range').hide("slow");
+  $('#customize').hide("slow");
+});
+$('#select').click(function(e){
+  $('#range').fadeToggle("slow");
+  $('#avgRange').hide("slow");
+  $('#customize').hide("slow");
+});
+$('#input').click(function(e){
+  $('#customize').fadeToggle("slow");
+  $('#range').hide("slow");
+  $('#avgRange').hide("slow");
 });

@@ -119,6 +119,7 @@ var fillForm = function(properties) {
   var filterLayer;
   var min;
   var max;
+  var avg;
   var minFeature;
   var maxFeature;
   var theSelected;
@@ -154,6 +155,7 @@ var general=function(){
   app.jsonClient.execute("SELECT AVG(total_num_rides) FROM cleandata_all_geom_new")
     .done(function(data) {
       $('#mean').val("Average Annual Rides Per Station: " + data.rows[0].avg);
+      avg=data.rows[0].avg;
     });
   app.jsonClient.execute("SELECT MIN(total_num_rides) FROM cleandata_all_geom_new")
     .done(function(data) {
@@ -287,6 +289,33 @@ general();
       });
   };
   var setFilter = function(){
+    
+    execution="SELECT * FROM cleandata_all_geom_new WHERE total_num_rides>"+lowFilterNumber+"AND total_num_rides<"+hiFilterNumber;
+    switch(option){
+      case 1:
+        execution="SELECT * FROM cleandata_all_geom_new WHERE total_num_rides<5000";
+        break;
+      case 2:
+        execution="SELECT * FROM cleandata_all_geom_new WHERE total_num_rides>5000 AND total_num_rides<10000";
+        break;
+      case 3:
+        execution="SELECT * FROM cleandata_all_geom_new WHERE total_num_rides>10000 AND total_num_rides<15000";
+        break;
+      case 4:
+        execution="SELECT * FROM cleandata_all_geom_new WHERE total_num_rides>15000 AND total_num_rides<20000";
+        break;
+      case 5:
+        execution="SELECT * FROM cleandata_all_geom_new WHERE total_num_rides>20000 AND total_num_rides<25000";
+        break;
+      case 6:
+        execution="SELECT * FROM cleandata_all_geom_new WHERE total_num_rides>25000 AND total_num_rides<30000";
+        break;
+      default:
+        execution="SELECT * FROM cleandata_all_geom_new WHERE total_num_rides>30000";
+        break;
+    }
+    execution="SELECT * FROM cleandata_all_geom_new WHERE total_num_rides<"+avg;
+    execution="SELECT * FROM cleandata_all_geom_new WHERE total_num_rides>"+avg;
     app.geojsonClient.execute(execution) // 'LIMIT' should be added to the end of this line
       .done(function(data) {
         // L.geoJson(data, {
@@ -479,30 +508,6 @@ general();
     app.map.setView([39.957042, -75.175922], 13);
     lowFilterNumber=$('#low_num_rides').val();
     hiFilterNumber=$('#high_num_rides').val();
-    execution="SELECT * FROM cleandata_all_geom_new WHERE total_num_rides>"+lowFilterNumber+"AND total_num_rides<"+hiFilterNumber;
-    switch(option){
-      case 1:
-        execution="SELECT * FROM cleandata_all_geom_new WHERE total_num_rides<5000";
-        break;
-      case 2:
-        execution="SELECT * FROM cleandata_all_geom_new WHERE total_num_rides>5000 AND total_num_rides<10000";
-        break;
-      case 3:
-        execution="SELECT * FROM cleandata_all_geom_new WHERE total_num_rides>10000 AND total_num_rides<15000";
-        break;
-      case 4:
-        execution="SELECT * FROM cleandata_all_geom_new WHERE total_num_rides>15000 AND total_num_rides<20000";
-        break;
-      case 5:
-        execution="SELECT * FROM cleandata_all_geom_new WHERE total_num_rides>20000 AND total_num_rides<25000";
-        break;
-      case 6:
-        execution="SELECT * FROM cleandata_all_geom_new WHERE total_num_rides>25000 AND total_num_rides<30000";
-        break;
-      default:
-        execution="SELECT * FROM cleandata_all_geom_new WHERE total_num_rides>30000";
-        break;
-    }
     // console.log(execution);
     // console.log($('#dropdownMenu1').text()==="Under 5000");
     setFilter();

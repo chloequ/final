@@ -133,15 +133,22 @@
             <button class="hideIt" id="hideIt3">
               <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
             </button>
-            <h5>Input your filter range of rides count</h5>
-             <input class="num_rides" id="low_num_rides" type="number"
-                    class="form-control"
-                    placeholder="Lower Limit">
-            To
-            <input class="num_rides" id="high_num_rides" type="number"
-                   class="form-control"
-                   placeholder="Higher Limit">
-             <div class="dropdown">
+            <ul class="nav nav-pills nav-stacked">
+              <li role="presentation" id="rough"><a href="#">Rough Sense</a></li>
+              <li role="presentation" id="select"><a href="#">Select Range</a></li>
+              <li role="presentation" id="input"><a href="#">Customize Range</a></li>
+            </ul>
+            <div id="customize" hidden="hidden">
+              <h5>Input your filter range of rides count</h5>
+               <input class="num_rides" id="low_num_rides" type="number"
+                      class="form-control"
+                      placeholder="Lower Limit">
+              To
+              <input class="num_rides" id="high_num_rides" type="number"
+                     class="form-control"
+                     placeholder="Higher Limit">
+            </div>
+             <div class="dropdown" id="range" hidden="hidden">
                 <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                   Select filter range for rides count
                   <span class="caret"></span>
@@ -157,6 +164,10 @@
                   <li><a href="#" id="option6">25001 to 30000</a></li>
                   <li><a href="#" id="option7">Above 30000</a></li>
                 </ul>
+              </div>
+              <div class="btn-group" role="group" aria-label="..." id="avgRange" hidden="hidden">
+                <button type="button" class="btn btn-default">Below Average</button>
+                <button type="button" class="btn btn-default">Above Average</button>
               </div>
               <div class="dropdown">
                  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
