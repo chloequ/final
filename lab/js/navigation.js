@@ -97,18 +97,22 @@ $('#clear').click(function(e){
   }
 });
 
+var filterSelect;
 $('#rough').click(function(e){
   $('#avgRange').fadeToggle("slow");
   $('#range').hide("slow");
   $('#customize').hide("slow");
+  filterSelect=1;
 });
 $('#select').click(function(e){
   $('#range').fadeToggle("slow");
   $('#avgRange').hide("slow");
   $('#customize').hide("slow");
+  filterSelect=2;
 });
 $('#input').click(function(e){
   $('#customize').fadeToggle("slow");
   $('#range').hide("slow");
   $('#avgRange').hide("slow");
+  filterSelect=3;
 });

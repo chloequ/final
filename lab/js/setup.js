@@ -289,33 +289,40 @@ general();
       });
   };
   var setFilter = function(){
-    
-    execution="SELECT * FROM cleandata_all_geom_new WHERE total_num_rides>"+lowFilterNumber+"AND total_num_rides<"+hiFilterNumber;
-    switch(option){
-      case 1:
-        execution="SELECT * FROM cleandata_all_geom_new WHERE total_num_rides<5000";
-        break;
-      case 2:
-        execution="SELECT * FROM cleandata_all_geom_new WHERE total_num_rides>5000 AND total_num_rides<10000";
-        break;
-      case 3:
-        execution="SELECT * FROM cleandata_all_geom_new WHERE total_num_rides>10000 AND total_num_rides<15000";
-        break;
-      case 4:
-        execution="SELECT * FROM cleandata_all_geom_new WHERE total_num_rides>15000 AND total_num_rides<20000";
-        break;
-      case 5:
-        execution="SELECT * FROM cleandata_all_geom_new WHERE total_num_rides>20000 AND total_num_rides<25000";
-        break;
-      case 6:
-        execution="SELECT * FROM cleandata_all_geom_new WHERE total_num_rides>25000 AND total_num_rides<30000";
-        break;
-      default:
-        execution="SELECT * FROM cleandata_all_geom_new WHERE total_num_rides>30000";
-        break;
+    if(filterSelect===2){
+      switch(option){
+        case 1:
+          execution="SELECT * FROM cleandata_all_geom_new WHERE total_num_rides<5000";
+          break;
+        case 2:
+          execution="SELECT * FROM cleandata_all_geom_new WHERE total_num_rides>5000 AND total_num_rides<10000";
+          break;
+        case 3:
+          execution="SELECT * FROM cleandata_all_geom_new WHERE total_num_rides>10000 AND total_num_rides<15000";
+          break;
+        case 4:
+          execution="SELECT * FROM cleandata_all_geom_new WHERE total_num_rides>15000 AND total_num_rides<20000";
+          break;
+        case 5:
+          execution="SELECT * FROM cleandata_all_geom_new WHERE total_num_rides>20000 AND total_num_rides<25000";
+          break;
+        case 6:
+          execution="SELECT * FROM cleandata_all_geom_new WHERE total_num_rides>25000 AND total_num_rides<30000";
+          break;
+        case 7:
+          execution="SELECT * FROM cleandata_all_geom_new WHERE total_num_rides>30000";
+          break;
+        default:
+          execution="SELECT * FROM cleandata_all_geom_new";
+          break;
+      }
     }
-    execution="SELECT * FROM cleandata_all_geom_new WHERE total_num_rides<"+avg;
-    execution="SELECT * FROM cleandata_all_geom_new WHERE total_num_rides>"+avg;
+    if(filterSelect===3){
+      execution="SELECT * FROM cleandata_all_geom_new WHERE total_num_rides>"+lowFilterNumber+"AND total_num_rides<"+hiFilterNumber;
+    }
+    if(filterSelect===1){
+      execution=roughExecution;
+    }
     app.geojsonClient.execute(execution) // 'LIMIT' should be added to the end of this line
       .done(function(data) {
         // L.geoJson(data, {
@@ -371,6 +378,7 @@ general();
   // getTop10();
 
   var option;
+  var roughExecution;
 
   $(document).ready(function(){
     $('#option1').click(function(e){
@@ -430,6 +438,12 @@ general();
       // $('#dropdownMenu2').text($('#option10').text());
       $('#dropdownMenu2').html($('#option10').text()+' <span class="caret"></span>');
       filterState=1;
+    });
+    $('#below').click(function(e){
+      roughExecution="SELECT * FROM cleandata_all_geom_new WHERE total_num_rides<"+avg;
+    });
+    $('#above').click(function(e){
+      roughExecution="SELECT * FROM cleandata_all_geom_new WHERE total_num_rides>"+avg;
     });
   });
 
