@@ -341,6 +341,8 @@ general();
   // };
   // getTop10();
 
+  var option;
+
   $(document).ready(function(){
     $('#option1').click(function(e){
     $('#option0').click(function(e){
@@ -349,30 +351,37 @@ general();
     });
       $('#dropdownMenu1').html($('#option1').text()+' <span class="caret"></span>');
       filterState=1;
+      option=1;
     });
     $('#option2').click(function(e){
       $('#dropdownMenu1').html($('#option2').text()+' <span class="caret"></span>');
       filterState=1;
+      option=2;
     });
     $('#option3').click(function(e){
       $('#dropdownMenu1').html($('#option3').text()+' <span class="caret"></span>');
       filterState=1;
+      option=3;
     });
     $('#option4').click(function(e){
       $('#dropdownMenu1').html($('#option4').text()+' <span class="caret"></span>');
       filterState=1;
+      option=4;
     });
     $('#option5').click(function(e){
       $('#dropdownMenu1').html($('#option5').text()+' <span class="caret"></span>');
       filterState=1;
+      option=5;
     });
     $('#option6').click(function(e){
       $('#dropdownMenu1').html($('#option6').text()+' <span class="caret"></span>');
       filterState=1;
+      option=6;
     });
     $('#option7').click(function(e){
       $('#dropdownMenu1').html($('#option7').text()+' <span class="caret"></span>');
       filterState=1;
+      option=7;
     });
     $('#option00').click(function(e){
       $('#dropdownMenu2').html("Select Type of Trip"+' <span class="caret"></span>');
@@ -471,6 +480,31 @@ general();
     lowFilterNumber=$('#low_num_rides').val();
     hiFilterNumber=$('#high_num_rides').val();
     execution="SELECT * FROM cleandata_all_geom_new WHERE total_num_rides>"+lowFilterNumber+"AND total_num_rides<"+hiFilterNumber;
+    switch(option){
+      case 1:
+        execution="SELECT * FROM cleandata_all_geom_new WHERE total_num_rides<5000";
+        break;
+      case 2:
+        execution="SELECT * FROM cleandata_all_geom_new WHERE total_num_rides>5000 AND total_num_rides<10000";
+        break;
+      case 3:
+        execution="SELECT * FROM cleandata_all_geom_new WHERE total_num_rides>10000 AND total_num_rides<15000";
+        break;
+      case 4:
+        execution="SELECT * FROM cleandata_all_geom_new WHERE total_num_rides>15000 AND total_num_rides<20000";
+        break;
+      case 5:
+        execution="SELECT * FROM cleandata_all_geom_new WHERE total_num_rides>20000 AND total_num_rides<25000";
+        break;
+      case 6:
+        execution="SELECT * FROM cleandata_all_geom_new WHERE total_num_rides>25000 AND total_num_rides<30000";
+        break;
+      default:
+        execution="SELECT * FROM cleandata_all_geom_new WHERE total_num_rides>30000";
+        break;
+    }
+    // console.log(execution);
+    // console.log($('#dropdownMenu1').text()==="Under 5000");
     setFilter();
   });
 
