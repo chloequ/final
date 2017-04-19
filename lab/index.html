@@ -19,17 +19,22 @@
         <li role="presentation" id="mapping"><a href="#">Maps</a></li>
         <li role="presentation" id="firstButton"><a href="#">Macro Stats</a></li>
         <li role="presentation"><a href="#" id="secondButton">Individual Stats</a></li>
-        <li role="presentation"><a href="#" id="thirdButton">Filter</a></li>
+        <li role="presentation"><a href="#" id="thirdButton">
+          <span class="glyphicon glyphicon-filter" aria-hidden="true"></span> Filter
+        </a></li>
+        <li role="presentation"><a href="#" id="fourthButton">
+          <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+        </a></li>
         <li role="presentation">
           <div class="form-group">
-           <input type="text" class="form-control" placeholder="Explore your location" id="destination">
+           <input type="text" class="form-control" placeholder="Explore your location" id="destination" hidden="hidden">
          </div>
        </li>
        <li role="presentation">
-         <button type="submit" class="btn btn-default" id="explore">Search</button>
+         <button type="submit" class="btn btn-default" id="explore" hidden="hidden">Search</button>
        </li>
        <li role="presentation">
-         <button type="submit" class="btn btn-default" id="clear">Clear</button>
+         <button type="submit" class="btn btn-default" id="clear" hidden="hidden">Clear</button>
        </li>
        </div>
       </ul>
@@ -203,7 +208,10 @@
     </div>
     <!-- Map -->
     <div id="map" class="map">
-      <div id="time-window"></div>
+      <button id="refresh">
+        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+      </button>
+      <!-- <div id="time-window"></div> -->
     </div>
     <!-- Javascript Imports -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>

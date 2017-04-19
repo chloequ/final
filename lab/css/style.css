@@ -133,6 +133,34 @@ style.css:1
   left:20px;
 }
 
+#destination {
+  padding: 10px 15px;
+  height:40px;
+}
+#explore {
+  padding: 10px 15px;
+  height:40px;
+}
+
+#clear {
+  padding: 10px 15px;
+  height:40px;
+}
+#refresh {
+  width: 33px;
+  height: 33px;
+  z-index: 5000;
+  border-radius: 4px;
+  position:relative;
+  left:30px;
+  top:250px;
+  background-color: #fff;
+  border-bottom: 1px solid #ccc;
+  text-align: center;
+  text-decoration: none;
+  color: #000;
+}
+
 .num_rides {
   width: 100px;
 }

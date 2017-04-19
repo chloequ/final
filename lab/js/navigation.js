@@ -1,13 +1,13 @@
 var state1=0;
 var state2=0;
-var state3=0;
+// var state3=0;
 $('#firstButton').click(function(e){
   state2=0;
-  $('#firstButton').css("background-color","blue");
   if (state1===1){
     $('#leftbar').hide();
     state1=0;
     $('#map > div.leaflet-control-container > div.leaflet-top.leaflet-left').css("left","20px");
+    $('#refresh').css("left","30px");
   }
   else{
     $('#macroStats').show();
@@ -16,6 +16,7 @@ $('#firstButton').click(function(e){
     $('#leftbar').show();
     state1=1;
     $('#map > div.leaflet-control-container > div.leaflet-top.leaflet-left').css("left","360px");
+    $('#refresh').css("left","370px");
   }
 });
 
@@ -25,6 +26,7 @@ $('#secondButton').click(function(e){
     $('#leftbar').hide();
     state2=0;
     $('#map > div.leaflet-control-container > div.leaflet-top.leaflet-left').css("left","20px");
+    $('#refresh').css("left","30px");
   }
   else{
     $('#macroStats').hide();
@@ -33,26 +35,35 @@ $('#secondButton').click(function(e){
     $('#leftbar').show();
     state2=1;
     $('#map > div.leaflet-control-container > div.leaflet-top.leaflet-left').css("left","360px");
+    $('#refresh').css("left","370px");
   }
 });
 
 $('#thirdButton').click(function(e){
-  if (state3===1){
-    $('#rightbar').hide();
-    state3=0;
-  }
-  else{
-    $('#rightbar').show();
-    state3=1;
-  }
+  $('#rightbar').fadeToggle();
+  // if (state3===1){
+  //   $('#rightbar').hide();
+  //   state3=0;
+  // }
+  // else{
+  //   $('#rightbar').show();
+  //   state3=1;
+  // }
 });
 
+$('#fourthButton').click(function(e){
+  $('#destination').fadeToggle();
+  $('#explore').fadeToggle();
+  $('#search').fadeToggle();
+  $('#clear').fadeToggle();
+});
 
 $('#hideIt1').click(function(e){
   $('#macroStats').hide();
   $('#leftbar').hide();
   state1=0;
   $('#map > div.leaflet-control-container > div.leaflet-top.leaflet-left').css("left","20px");
+  $('#refresh').css("left","30px");
 });
 
 $('#hideIt2').click(function(e){
@@ -61,12 +72,12 @@ $('#hideIt2').click(function(e){
   $('#leftbar').hide();
   state2=0;
   $('#map > div.leaflet-control-container > div.leaflet-top.leaflet-left').css("left","20px");
+  $('#refresh').css("left","30px");
 });
 
-$('#hideIt3').click(function(e){
-  $('#rightbar').hide();
-  state3=0;
-});
+// $('#hideIt3').click(function(e){
+//   // state3=0;
+// });
 
 var dest;
 var getDest;
