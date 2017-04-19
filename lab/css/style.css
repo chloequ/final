@@ -119,6 +119,13 @@ style.css:1
     font-weight: bold;
 }
 
+#avgRange {
+  margin-bottom: 10px;
+}
+#roundFilter {
+  margin-top: 10px;
+}
+
 #map > div.leaflet-control-container > div.leaflet-top.leaflet-left{
   position: relative;
   top:60px;

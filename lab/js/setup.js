@@ -120,6 +120,7 @@ var fillForm = function(properties) {
   var min;
   var max;
   var avg;
+  var avgRound;
   var minFeature;
   var maxFeature;
   var theSelected;
@@ -166,6 +167,10 @@ var general=function(){
     .done(function(data) {
       $('#max').text("MAX: " + data.rows[0].max);
       max=data.rows[0].max;
+    });
+  app.jsonClient.execute("SELECT AVG(per_round) FROM indego_combined")
+    .done(function(data) {
+      avgRound=data.rows[0].avg;
     });
 };
 general();
@@ -295,22 +300,22 @@ general();
           execution="SELECT * FROM cleandata_all_geom_new WHERE total_num_rides<5000";
           break;
         case 2:
-          execution="SELECT * FROM cleandata_all_geom_new WHERE total_num_rides>5000 AND total_num_rides<10000";
+          execution="SELECT * FROM cleandata_all_geom_new WHERE total_num_rides>=5000 AND total_num_rides<10000";
           break;
         case 3:
-          execution="SELECT * FROM cleandata_all_geom_new WHERE total_num_rides>10000 AND total_num_rides<15000";
+          execution="SELECT * FROM cleandata_all_geom_new WHERE total_num_rides>=10000 AND total_num_rides<15000";
           break;
         case 4:
-          execution="SELECT * FROM cleandata_all_geom_new WHERE total_num_rides>15000 AND total_num_rides<20000";
+          execution="SELECT * FROM cleandata_all_geom_new WHERE total_num_rides>=15000 AND total_num_rides<20000";
           break;
         case 5:
-          execution="SELECT * FROM cleandata_all_geom_new WHERE total_num_rides>20000 AND total_num_rides<25000";
+          execution="SELECT * FROM cleandata_all_geom_new WHERE total_num_rides>=20000 AND total_num_rides<25000";
           break;
         case 6:
-          execution="SELECT * FROM cleandata_all_geom_new WHERE total_num_rides>25000 AND total_num_rides<30000";
+          execution="SELECT * FROM cleandata_all_geom_new WHERE total_num_rides>=25000 AND total_num_rides<30000";
           break;
         case 7:
-          execution="SELECT * FROM cleandata_all_geom_new WHERE total_num_rides>30000";
+          execution="SELECT * FROM cleandata_all_geom_new WHERE total_num_rides>=30000";
           break;
         default:
           execution="SELECT * FROM cleandata_all_geom_new";
@@ -322,6 +327,22 @@ general();
     }
     if(filterSelect===1){
       execution=roughExecution;
+    }
+    if(filterSelect===4){
+      execution=roughExecution2;
+    }
+    if(filterSelect===5){
+      switch(option){
+        case 8:
+          execution="SELECT * FROM indego_combined WHERE per_round<5%";
+          break;
+        case 9:
+          execution="SELECT * FROM indego_combined WHERE per_round>=5% AND per_round<15%";
+          break;
+        case 10:
+          execution="SELECT * FROM indego_combined WHERE per_round>=15% AND per_round<25%";
+          break;
+      }
     }
     app.geojsonClient.execute(execution) // 'LIMIT' should be added to the end of this line
       .done(function(data) {
@@ -379,6 +400,7 @@ general();
 
   var option;
   var roughExecution;
+  var roughExecution2;
 
   $(document).ready(function(){
     $('#option1').click(function(e){
@@ -421,29 +443,38 @@ general();
       option=7;
     });
     $('#option00').click(function(e){
-      $('#dropdownMenu2').html("Select Type of Trip"+' <span class="caret"></span>');
+      $('#dropdownMenu2').html("Select your filter range"+' <span class="caret"></span>');
       filterState=0;
     });
     $('#option8').click(function(e){
       // $('#dropdownMenu2').text($('#option8').text());
       $('#dropdownMenu2').html($('#option8').text()+' <span class="caret"></span>');
       filterState=1;
+      option=8;
     });
     $('#option9').click(function(e){
       // $('#dropdownMenu2').text($('#option9').text());
       $('#dropdownMenu2').html($('#option9').text()+' <span class="caret"></span>');
       filterState=1;
+      option=9;
     });
     $('#option10').click(function(e){
       // $('#dropdownMenu2').text($('#option10').text());
       $('#dropdownMenu2').html($('#option10').text()+' <span class="caret"></span>');
       filterState=1;
+      option=10;
     });
     $('#below').click(function(e){
       roughExecution="SELECT * FROM cleandata_all_geom_new WHERE total_num_rides<"+avg;
     });
     $('#above').click(function(e){
       roughExecution="SELECT * FROM cleandata_all_geom_new WHERE total_num_rides>"+avg;
+    });
+    $('#below2').click(function(e){
+      roughExecution2="SELECT * FROM indego_combined WHERE per_round<"+avgRound;
+    });
+    $('#above2').click(function(e){
+      roughExecution2="SELECT * FROM indego_combined WHERE per_round>"+avgRound;
     });
   });
 

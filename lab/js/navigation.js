@@ -116,3 +116,14 @@ $('#input').click(function(e){
   $('#avgRange').hide("slow");
   filterSelect=3;
 });
+
+$('#rough2').click(function(e){
+  $('#avgRound').fadeToggle("slow");
+  $('#rangeRound').hide("slow");
+  filterSelect=4;
+});
+$('#select2').click(function(e){
+  $('#rangeRound').fadeToggle("slow");
+  $('#avgRound').hide("slow");
+  filterSelect=5;
+});
