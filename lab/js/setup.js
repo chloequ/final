@@ -94,7 +94,7 @@ var fillForm = function(properties) {
   $('#address').val("Address: " + properties.addressstreet);
   $('#zipcode').val("Zipcode: "+properties.addresszipcode);
   $('#dockNumber').val("Docking Capacity: " + properties.totaldocks);
-  $('#tll_per').val("Percentage of All Indego Rides: " + properties.ttl_per);
+  $('#tll_per').val("Share of All Indego Rides: " + properties.ttl_per);
   $('#station_id').val("Station ID: " + properties.station_id);
   $('#departure').val("Departure: " + properties.start_num_rides + " rides, " + properties.st_per_in + " of total");
   $('#arrival').val("Arrival: " + properties.end_num_rides + " rides, " + properties.ed_per_in + " of total");

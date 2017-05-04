@@ -14,19 +14,29 @@
   </head>
   <body>
     <!-- topbar -->
-    <div class="topbar" style="vertical-align:middle">
+    <div id="thintop" hidden="hidden">
+      <span class="glyphicon glyphicon-chevron-down" aria-hidden="true" style="font-size:20px" id="menuDown"></span>
+    </div>
+    <div class="topbar" id="top" style="vertical-align:middle">
       <ul class="nav nav-pills">
-        <li role="presentation" id="mapping"><a href="#">
+        <li role="presentation" id="menuUp"><a href="#">
+          <span class="glyphicon glyphicon-chevron-up" aria-hidden="true" style="font-size:20px"></span>
+          </a></li>
+        <li role="presentation" id="mapping" style="margin-left:3px"><a href="#">
           <span class="glyphicon glyphicon-globe" aria-hidden="true" style="font-size:20px"></span>
-          Maps</a></li>
+          <!-- Maps -->
+        </a></li>
         <li role="presentation" id="firstButton" style="margin-left:3px"><a href="#">
           <span class="glyphicon glyphicon-list-alt" aria-hidden="true" style="font-size:20px"></span>
-          Macro Stats</a></li>
+          <!-- Macro Stats -->
+        </a></li>
         <li role="presentation"><a href="#" id="secondButton" style="margin-left:1px">
           <span class="glyphicon glyphicon-info-sign" aria-hidden="true" style="font-size:20px"></span>
-          Individual Stats</a></li>
+          <!-- Individual Stats -->
+        </a></li>
         <li role="presentation"><a href="#" id="thirdButton" style="margin-left:2px">
-          <span class="glyphicon glyphicon-filter" aria-hidden="true" style="font-size:20px"></span> Filter
+          <span class="glyphicon glyphicon-filter" aria-hidden="true" style="font-size:20px"></span>
+          <!-- Filter -->
         </a></li>
         <li role="presentation"><a href="#" id="fourthButton" style="margin-left:2px">
           <span class="glyphicon glyphicon-search" aria-hidden="true" style="font-size:20px"></span>
@@ -48,107 +58,89 @@
     </div>
     <!-- Sidebar -->
     <div class="sidebar" id="leftbar" hidden="hidden">
-      <!-- <nav class="navbar navbar-default">
-        <div class="container-fluid">
-          <div class="navbar-header"> -->
-            <div class="subdiv" id="macroStats" hidden="hidden">
-              <h3>Macro Stats</h3>
-              <!-- <button class="hideIt" id="hideIt1">
-                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-              </button> -->
-              <span class="glyphicon glyphicon-remove-circle" aria-hidden="true" id="hideIt1" style="font-size:25px"></span>
-              <div class="input-group">
-                <input id="total" type="text"
-                       class="form-control"
-                       placeholder="Total Indego Rides in 2016"
-                       disabled>
-               <input id="mean" type="text"
-                      class="form-control"
-                      placeholder="Average Annual Rides Per Station"
-                      disabled>
-                <button class="minmax" id="min">MIN</button>
-                <button class="minmax" id="max">MAX</button>
-              </div>
-              <!-- <input class="minmax" id="min" type="text"
-                     class="form-control"
-                     placeholder="MIN"
-                     disabled>
-             <input class="minmax" id="max" type="text"
-                    class="form-control"
-                    placeholder="MAX"
-                    disabled> -->
-            </div>
-            <div class="subdiv" id="stationInfo" hidden="hidden">
-              <h3>Station Info</h3>
-              <!-- <button class="hideIt" id="hideIt2">
-                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-              </button> -->
-              <span class="glyphicon glyphicon-remove-circle" aria-hidden="true" id="hideIt2" style="font-size:25px"></span>
-              <div class="input-group">
-                <input id="station_id" type="text"
-                       class="form-control"
-                       placeholder="Station ID"
-                       disabled>
-               <input id="address" type="text"
-                      class="form-control"
-                      placeholder="Address"
-                      disabled>
-              <input id="zipcode" type="text"
-                     class="form-control"
-                     placeholder="Zipcode"
-                     disabled>
-               <input id="dockNumber" type="text"
-                      class="form-control"
-                      placeholder="Docking Capacity"
-                      disabled>
-              </div>
-            </div>
-            <div class="subdiv" id="indivStats" hidden="hidden">
-              <h3>Individual Stats</h3>
-              <div class="input-group">
-                 <input id="total_num_rides" type="text"
-                        class="form-control"
-                        placeholder="Total Number of Rides"
-                        disabled>
-                <input id="std_rides" type="text"
-                       class="form-control"
-                       placeholder="Standardized Number of Rides"
-                       disabled>
-                <input id="tll_per" type="text"
-                       class="form-control"
-                       placeholder="Percentage of All Indego Rides"
-                       disabled>
-                <input id="arrival" type="text"
-                       class="form-control"
-                       placeholder="Arrival: # %"
-                       disabled>
-                 <input id="departure" type="text"
-                        class="form-control"
-                        placeholder="Departure: # %"
-                        disabled>
-              </div>
-            </div>
-
-          <!-- </div>
+      <div class="subdiv" id="macroStats" hidden="hidden">
+        <!-- <h3>Macro Stats</h3>
+        <span class="glyphicon glyphicon-remove-circle" aria-hidden="true" id="hideIt1" style="font-size:25px"></span> -->
+        <div class="barTitle" style="margin-left:7px">
+          <span class="glyphicon glyphicon-list-alt icon" aria-hidden="true" style="color:antiquewhite; font-size:25px"></span>
+          <h3 style="color:antiquewhite; vertical-align:middle">Macro Stats</h3>
+          <span class="glyphicon glyphicon-remove-circle" aria-hidden="true" id="hideIt1" style="font-size:25px; color:rgba(250, 235, 215,0.5); float:right"></span>
         </div>
-      </nav> -->
-      <!-- <div class="container-fluid">
-        <ul id="project-list" class="list-group">
-        </ul>
-      </div> -->
+        <div class="subBar">
+          <div class="input-group">
+          <input id="total" type="text"
+                 class="form-control"
+                 placeholder="Total Indego Rides in 2016"
+                 disabled>
+          <input id="mean" type="text"
+                class="form-control"
+                placeholder="Average Annual Rides Per Station"
+                disabled>
+          <button class="minmax" id="min">MIN</button>
+          <button class="minmax" id="max">MAX</button>
+        </div>
+        </div>
+      </div>
+      <div class="subdiv" id="stationInfo" hidden="hidden">
+        <div class="barTitle" style="margin-left:7px">
+          <span class="glyphicon glyphicon-info-sign" aria-hidden="true" style="color:antiquewhite; font-size:25px"></span>
+          <h3 style="color:antiquewhite; vertical-align:middle">Individual Stats</h3>
+          <span class="glyphicon glyphicon-remove-circle" aria-hidden="true" id="hideIt2" style="font-size:25px; color:rgba(250, 235, 215,0.5)"></span>
+        </div>
+        <div class="subBar">
+          <h4>Station Info</h4>
+          <div class="input-group">
+            <input id="station_id" type="text"
+                   class="form-control"
+                   placeholder="Station ID"
+                   disabled>
+            <input id="address" type="text"
+                  class="form-control"
+                  placeholder="Address"
+                  disabled>
+            <input id="zipcode" type="text"
+                 class="form-control"
+                 placeholder="Zipcode"
+                 disabled>
+            <input id="dockNumber" type="text"
+                  class="form-control"
+                  placeholder="Docking Capacity"
+                  disabled>
+          </div>
+          <div class="subdiv" id="indivStats" hidden="hidden">
+            <h4>Stats of Indego Rides</h4>
+            <div class="input-group">
+               <input id="total_num_rides" type="text"
+                      class="form-control"
+                      placeholder="Total Number of Rides"
+                      disabled>
+              <input id="std_rides" type="text"
+                     class="form-control"
+                     placeholder="Standardized Number of Rides"
+                     disabled>
+              <input id="tll_per" type="text"
+                     class="form-control"
+                     placeholder="Share of All Indego Rides"
+                     disabled>
+              <input id="arrival" type="text"
+                     class="form-control"
+                     placeholder="Arrival"
+                     disabled>
+               <input id="departure" type="text"
+                      class="form-control"
+                      placeholder="Departure"
+                      disabled>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <div class="sidebar" id="rightbar" hidden="hidden">
-      <!-- <nav class="navbar navbar-default">
-        <div class="container-fluid">
-          <div class="navbar-header"> -->
           <div class="barTitle">
-            <span class="glyphicon glyphicon-filter" aria-hidden="true" style="color:antiquewhite; font-size:25px"></span>
-            <h3 style="color:antiquewhite; margin-top:5px">Filter by...</h3>
-            <!-- <button class="hideIt" id="hideIt3">
-              <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-            </button> -->
-            <span class="glyphicon glyphicon-remove-circle" aria-hidden="true" id="hideIt3" style="font-size:25px; color:rgba(250, 235, 215,0.5);margin-left:90px"></span>
+            <span class="glyphicon glyphicon-filter icon" aria-hidden="true" style="color:antiquewhite; font-size:25px"></span>
+            <h3 style="color:antiquewhite; vertical-align:middle">Filter by...</h3>
+            <span class="glyphicon glyphicon-remove-circle" aria-hidden="true" id="hideIt3" style="font-size:25px; color:rgba(250, 235, 215,0.5)"></span>
           </div>
           <div class="filterSelection" id="filterSelection1" style="color:antiquewhite">
             <span class="glyphicon glyphicon-road" aria-hidden="true" style="font-size:50px"></span>
@@ -156,7 +148,8 @@
           </div>
           <div class="filterSelection" id="filterSelection2" style="color:antiquewhite">
             <span class="glyphicon glyphicon-repeat" aria-hidden="true" style="font-size:50px"></span>
-            Percent of <strong>Round Trips</strong></div>
+            Percent of <strong>Round Trips</strong>
+          </div>
           <div id="filterSelection11" hidden="hidden">
             <ul class="nav nav-pills nav-stacked" id="numberFilter" hidden="hidden">
               <li role="presentation" id="rough" style="margin-bottom:5px"><a href="#">Average Cut</a></li>
@@ -173,7 +166,7 @@
                      class="form-control"
                      placeholder="Max" style="color:black">
             </div>
-             <div class="dropdown" id="range" hidden="hidden">
+            <div class="dropdown" id="range" hidden="hidden">
                 <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                   Select your filter range
                   <span class="caret"></span>
@@ -189,11 +182,11 @@
                   <li><a href="#" id="option6">25001 to 30000</a></li>
                   <li><a href="#" id="option7">Above 30000</a></li>
                 </ul>
-              </div>
-              <div class="btn-group" role="group" aria-label="..." id="avgRange" hidden="hidden">
-                <button type="button" class="btn btn-default" id="below">Below Average</button>
-                <button type="button" class="btn btn-default" id="above">Above Average</button>
-              </div>
+            </div>
+            <div class="btn-group" role="group" aria-label="..." id="avgRange" hidden="hidden">
+              <button type="button" class="btn btn-default" id="below">Below Average</button>
+              <button type="button" class="btn btn-default" id="above">Above Average</button>
+            </div>
           </div>
           <div id="filterSelection22" hidden="hidden">
             <ul class="nav nav-pills nav-stacked" id="roundFilter" hidden="hidden">
@@ -222,14 +215,6 @@
             <button class="button" id="filter">Filter</button>
             <button class="button" id="reset">Reset</button>
           </div>
-<!--
-          </div>
-        </div>
-      </nav> -->
-      <!-- <div class="container-fluid">
-        <ul id="project-list" class="list-group">
-        </ul>
-      </div> -->
     </div>
     <!-- Map -->
     <div id="map" class="map">

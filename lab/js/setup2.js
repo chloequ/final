@@ -125,8 +125,10 @@ var fillForm = function(properties) {
   var minFeature;
   var maxFeature;
   var theSelected;
-  var minMarker;
-  var maxMarker;
+  var minMarker=[];
+  var maxMarker=[];
+  var minMarkers=[];
+  var maxMarkers=[];
 
 // variables for mapping routes
   var mystart;
@@ -355,12 +357,21 @@ setLayer={
         //   },
       filterLayer=L.geoJson(data, setLayer);
       filterLayer.addTo(app.map);})
-      .error(function() {if(filterState===0){
-        if(typeof(lowFilterNumber)!==Number || typeof(hiFilterNumber)!==Number){
-          alert("Please select a filter range or input integers to create a customized filter range!");
+      .error(
+        function() {
+          if(filterSelect===0 || filterState===0){
+            alert("Did you forget to specify the filter?");
+          }
+          if(filterState===1){
+            if(typeof(lowFilterNumber)!==Number || typeof(hiFilterNumber)!==Number){
+              alert("Please select a filter range or input integers to create a customized filter range!");
+            }
+          }
+          else{
+            alert("Oops!Something wrong happened");
+          }
           setDefault();
-        }
-      }});
+        });
   };
 
   // var getTop10= function(){
@@ -384,11 +395,15 @@ setLayer={
     if(filterLayer!==undefined){
       app.map.removeLayer(filterLayer);
     }
-    if(minMarker!==undefined){
-      app.map.removeLayer(minMarker);
+    if(minMarkers!==undefined){
+      _.each(minMarkers,function(minMarker){
+        app.map.removeLayer(minMarker);
+      });
     }
-    if(maxMarker!==undefined){
-      app.map.removeLayer(maxMarker);
+    if(maxMarkers!==undefined){
+      _.each(maxMarkers, function(maxMarker){
+        app.map.removeLayer(maxMarker);
+      });
     }
     if(myStartRoute!==undefined){
       app.map.removeLayer(myStartRoute);
@@ -492,23 +507,27 @@ setLayer={
       opacity: 0.5,
       fillColor: '#9ba1aa',
       fillOpacity: 0.1 });
-    minMarker.addTo(app.map);
-    minMarker.on('mouseover', function(l){
-      minMarker.setStyle( {radius: 15,
-        color: '#9ba1aa',
-        weight: 5,
-        opacity: 0,
-        fillColor: '#9ba1aa',
-        fillOpacity: 0.8});
+    minMarkers.push(minMarker);
+    _.each(minMarkers,function(minMarker){
+      minMarker.addTo(app.map);
+      minMarker.on('mouseover', function(l){
+        minMarker.setStyle( {radius: 15,
+          color: '#9ba1aa',
+          weight: 5,
+          opacity: 0,
+          fillColor: '#9ba1aa',
+          fillOpacity: 0.8});
+      });
+      minMarker.on('mouseout', function(l){
+        minMarker.setStyle( {radius:25,
+          color: '#9ba1aa',
+          weight: 5,
+          opacity: 0.5,
+          fillColor: '#9ba1aa',
+          fillOpacity: 0.1});
+      });
     });
-    minMarker.on('mouseout', function(l){
-      minMarker.setStyle( {radius:25,
-        color: '#9ba1aa',
-        weight: 5,
-        opacity: 0.5,
-        fillColor: '#9ba1aa',
-        fillOpacity: 0.1});
-    });
+
     fillForm(minFeature.properties);
     app.map.setView([minFeature.properties.station_lat, minFeature.properties.station_lon],15);
     if(filterLayer !== undefined) {
@@ -525,22 +544,25 @@ setLayer={
       opacity: 0.5,
       fillColor: '#9ba1aa',
       fillOpacity: 0.1 });
-    maxMarker.addTo(app.map);
-    maxMarker.on('mouseover', function(l){
-      maxMarker.setStyle( {radius: 15,
-        color: '#9ba1aa',
-        weight: 5,
-        opacity: 0,
-        fillColor: '#9ba1aa',
-        fillOpacity: 0.8});
-    });
-    maxMarker.on('mouseout', function(l){
-      maxMarker.setStyle( {radius:25,
-        color: '#9ba1aa',
-        weight: 5,
-        opacity: 0.5,
-        fillColor: '#9ba1aa',
-        fillOpacity: 0.1});
+    maxMarkers.push(maxMarker);
+    _.each(maxMarkers,function(maxMarker){
+      maxMarker.addTo(app.map);
+      maxMarker.on('mouseover', function(l){
+        maxMarker.setStyle( {radius: 15,
+          color: '#9ba1aa',
+          weight: 5,
+          opacity: 0,
+          fillColor: '#9ba1aa',
+          fillOpacity: 0.8});
+      });
+      maxMarker.on('mouseout', function(l){
+        maxMarker.setStyle( {radius:25,
+          color: '#9ba1aa',
+          weight: 5,
+          opacity: 0.5,
+          fillColor: '#9ba1aa',
+          fillOpacity: 0.1});
+      });
     });
     fillForm(maxFeature.properties);
     app.map.setView([maxFeature.properties.station_lat, maxFeature.properties.station_lon],15);
@@ -553,6 +575,7 @@ setLayer={
     app.map.removeLayer(defaultLayer);
     if(filterLayer!==undefined){
       app.map.removeLayer(filterLayer);
+      alert("Please select a filter range or input integers to create a customized filter range!");
     }
     app.map.setView([39.957042, -75.175922], 13);
     lowFilterNumber=$('#low_num_rides').val();
