@@ -1,6 +1,9 @@
 // $('#top').on('mouseover',function(e){
-//   $('#thintop').show("slow");
+//   $('#thintop').fadeIn("slow");
 // });
+$('#startMap').click(function(e){
+  $('#modal').fadeToggle("slow");
+});
 
 $('#menuUp').on('click',function(e){
   $('#top').fadeToggle();
@@ -14,29 +17,106 @@ $('#menuDown').on('click',function(e){
   // $('menuDown').css("color","white");
 });
 
+$('#refresh').on('mouseover',function(){
+  $('#refresh').css("background-color","rgb(239, 239, 239)");
+});
+$('#refresh').on('mouseout',function(){
+  $('#refresh').css("background-color","rgb(255, 255, 255)");
+});
+
+var state0=0;
 var state1=0;
 var state2=0;
 // var state3=0;
+
+$('#mapping').click(function(e){
+  $('.sidebar').css("top","55px");
+  state1=0;
+  state2=0;
+  if (state0===1){
+    $('#leftbar').fadeToggle();
+    state0=0;
+    $('#map > div.leaflet-control-container > div.leaflet-top.leaflet-left').css("left","20px");
+    $('#refresh').css("left","30px");
+    $('.legend').css("left","30px");
+    $('.discription').hide();
+  }
+  else{
+    $('#maps').fadeIn();
+    $('#mapsChoice').fadeIn();
+    $('#macroStats').hide();
+    // $('#indivStats').hide();
+    $('#stationInfo').hide();
+    // $('#popularOD').hide();
+    $('#leftbar').fadeIn();
+    state0=1;
+    $('#map > div.leaflet-control-container > div.leaflet-top.leaflet-left').css("left","360px");
+    $('#refresh').css("left","370px");
+    $('.legend').css("left","370px");
+  }
+});
+
+$('#mapsChoice1').click(function(e){
+  $('#discription1').fadeToggle();
+  $('#gradient1').fadeIn();
+  $('#gradient2').fadeOut();
+  $('.legendText').fadeIn();
+  $('#discription2').hide();
+  $('#sizing').fadeOut();
+  // $('#map > div.leaflet-control-container > div.leaflet-top.leaflet-left').css("top","80px");
+  // $('#refresh').css("top","200px");
+});
+$('#mapsChoice2').click(function(e){
+  $('#discription2').fadeToggle();
+  $('#gradient2').fadeIn();
+  $('#gradient1').fadeOut();
+  $('.legendText').fadeIn();
+  $('#discription1').hide();
+  $('#sizing').fadeOut();
+  // $('#map > div.leaflet-control-container > div.leaflet-top.leaflet-left').css("top","80px");
+  // $('#refresh').css("top","200px");
+});
+
 $('#firstButton').click(function(e){
   // $('#top').fadeToggle();
   // $('#thintop').fadeToggle();
   $('.sidebar').css("top","55px");
+  state0=0;
   state2=0;
   if (state1===1){
-    $('#leftbar').hide();
+    $('#leftbar').fadeToggle();
     state1=0;
     $('#map > div.leaflet-control-container > div.leaflet-top.leaflet-left').css("left","20px");
     $('#refresh').css("left","30px");
+    $('.legend').css("left","30px");
   }
   else{
-    $('#macroStats').show();
-    $('#indivStats').hide();
+    $('#macroStats').fadeIn();
+    // $('#indivStats').hide();
     $('#stationInfo').hide();
-    $('#leftbar').show();
+    $('#maps').hide();
+    // $('#popularOD').hide();
+    $('#leftbar').fadeIn();
     state1=1;
     $('#map > div.leaflet-control-container > div.leaflet-top.leaflet-left').css("left","360px");
     $('#refresh').css("left","370px");
+    $('.legend').css("left","370px");
+    $('.discription').hide();
   }
+});
+
+$('#min').on('mouseover',function(e){
+  $('#min').css(hoverStyle);
+});
+$('#max').on('mouseover',function(e){
+  $('#max').css(hoverStyle);
+});
+
+$('#min').on('mouseout',function(e){
+  $('#min').css(defaultStyle);
+});
+$('#max').on('mouseout',function(e){
+  $('#max').css(defaultStyle);
 });
 
 $('#secondButton').click(function(e){
@@ -44,21 +124,50 @@ $('#secondButton').click(function(e){
   // $('#thintop').fadeToggle();
   $('.sidebar').css("top","55px");
   state1=0;
+  state0=0;
   if (state2===1){
-    $('#leftbar').hide();
+    $('#leftbar').fadeToggle();
     state2=0;
     $('#map > div.leaflet-control-container > div.leaflet-top.leaflet-left').css("left","20px");
     $('#refresh').css("left","30px");
+    $('.legend').css("left","30px");
   }
   else{
     $('#macroStats').hide();
-    $('#indivStats').show();
-    $('#stationInfo').show();
-    $('#leftbar').show();
+    $('#maps').hide();
+    $('#stationInfo').fadeIn();
+    $('#info1').hide();
+    $('#info2').hide();
+    $('#leftbar').fadeIn();
     state2=1;
     $('#map > div.leaflet-control-container > div.leaflet-top.leaflet-left').css("left","360px");
     $('#refresh').css("left","370px");
+    $('.legend').css("left","370px");
+    $('.discription').hide();
   }
+});
+
+$('#rideStats').click(function(e){
+  $('#info1').fadeToggle();
+  $('#info2').hide();
+});
+
+$('#od').click(function(e){
+  $('#info2').fadeToggle();
+  $('#info1').hide();
+});
+
+$('#rideStats').on('mouseover',function(e){
+  $('#rideStats').css(hoverStyle);
+});
+$('#od').on('mouseover',function(e){
+  $('#od').css(hoverStyle);
+});
+$('#rideStats').on('mouseout',function(e){
+  $('#rideStats').css(defaultStyle);
+});
+$('#od').on('mouseout',function(e){
+  $('#od').css(defaultStyle);
 });
 
 var fadeStyle={
@@ -105,7 +214,7 @@ $('#thirdButton').click(function(e){
   //   state3=0;
   // }
   // else{
-  //   $('#rightbar').show();
+  //   $('#rightbar').fadeIn();
   //   state3=1;
   // }
 });
@@ -114,13 +223,13 @@ var filterclick1=0;
 var filterclick2=0;
 // var filterclick;
 var clickState1 = function(){
-    $('#filterSelection11').show();
+    $('#filterSelection11').fadeIn();
     $('#numberFilter').fadeToggle();
     filterclick1+=1;
 };
 
 var clickState2 = function(){
-  $('#filterSelection22').show();
+  $('#filterSelection22').fadeIn();
   $('#roundFilter').fadeToggle();
   filterclick2+=1;
 };
@@ -130,11 +239,14 @@ $('#filterSelection1').click(function(e){
   if(filterclick2%2!==0){
     clickState2();
   }
-  $('#rough').show();
-  $('#select').show();
-  $('#input').show();
+  $('#rough').fadeIn();
+  $('#select').fadeIn();
+  $('#input').fadeIn();
   $('#avgRound').hide();
-  $('#rangeRound').hide();
+  $('#rangeRound').fadeOut();
+  $('#avgRange').fadeOut();
+  $('#range').fadeOut();
+  $('#customize').fadeOut();
 });
 
 $('#filterSelection2').click(function(e){
@@ -142,11 +254,13 @@ $('#filterSelection2').click(function(e){
   if(filterclick1%2!==0) {
     clickState1();
   }
-  $('#rough2').show();
-  $('#select2').show();
-  $('#avgRange').hide();
-  $('#range').hide();
-  $('#customize').hide();
+  $('#rough2').fadeIn();
+  $('#select2').fadeIn();
+  $('#avgRange').fadeOut();
+  $('#range').fadeOut();
+  $('#customize').fadeOut();
+  $('#avgRound').fadeOut();
+  $('#rangeRound').fadeOut();
 });
 
 $('#filterSelection1').on('mouseover',function(e){
@@ -203,12 +317,23 @@ $('#fourthButton').click(function(e){
   $('#clear').fadeToggle();
 });
 
+$('#hideIt0').click(function(e){
+  $('#maps').hide();
+  $('#leftbar').fadeOut();
+  state0=0;
+  $('#map > div.leaflet-control-container > div.leaflet-top.leaflet-left').css("left","20px");
+  $('#refresh').css("left","30px");
+  $('.legend').css("left","30px");
+  $('.discription').hide();
+});
+
 $('#hideIt1').click(function(e){
   $('#macroStats').hide();
   $('#leftbar').hide();
   state1=0;
   $('#map > div.leaflet-control-container > div.leaflet-top.leaflet-left').css("left","20px");
   $('#refresh').css("left","30px");
+  $('.legend').css("left","30px");
 });
 
 $('#hideIt2').click(function(e){
@@ -218,6 +343,7 @@ $('#hideIt2').click(function(e){
   state2=0;
   $('#map > div.leaflet-control-container > div.leaflet-top.leaflet-left').css("left","20px");
   $('#refresh').css("left","30px");
+  $('.legend').css("left","30px");
 });
 
 $('#hideIt3').click(function(e){
@@ -226,6 +352,13 @@ $('#hideIt3').click(function(e){
   document.getElementById('filterSelection1').style.backgroundColor="rgba(0, 0, 0, 0.4)";
   document.getElementById('filterSelection2').style.color="antiquewhite";
   document.getElementById('filterSelection2').style.backgroundColor="rgba(0, 0, 0, 0.4)";
+});
+
+$('#hideIt0').on('mouseover',function(e){
+  $('#hideIt0').css("color","antiquewhite");
+});
+$('#hideIt0').on('mouseout',function(e){
+  $('#hideIt0').css("color","rgba(250, 235, 215,0.5)");
 });
 
 $('#hideIt1').on('mouseover',function(e){

@@ -1,15 +1,21 @@
 body {
     padding: 0;
     overflow: hidden;
-    font-family: Trebuchet MS;
+    /*font-family: Trebuchet MS;*/
+    font-family: sans-serif;
 }
 
 h3 {
     display: inline-block;
     margin: 0px;
+    font-variant: small-caps;
 }
-Inherited from body
-style.css:1
+
+h5 {
+    display: inline-block;
+    margin: 0px;
+    vertical-align: middle;
+}
 
 
 #time-window {
@@ -19,6 +25,19 @@ style.css:1
     z-index: 1000;
     background-color: white;
     padding: 0px 10px 0px 10px;
+}
+
+#modal {
+  position: absolute;
+  z-index: 10000;
+  height: 100%;
+  width: 100%;
+  background-color: black;
+}
+
+#startMap {
+  z-index: 10001;
+  box-sizing: border-box;
 }
 
 .map {
@@ -72,7 +91,7 @@ a {
 
 .sidebar {
     position:absolute;
-    top: 30px;
+    top: 55px;
     bottom: 0px;
     overflow-y: auto;
     padding-bottom: 60px;
@@ -84,7 +103,7 @@ a {
 
 .barTitle {
   z-index: 1001;
-  background-color:rgba(0,0,0,0.4);
+  background-color:rgba(0,0,0,0.8);
   box-sizing: border-box;
   /*margin-top: 10px;*/
   margin-bottom: 10px;
@@ -103,6 +122,108 @@ a {
   left: 0px;
   width: 340px;
 }
+
+.discription {
+  box-sizing: border-box;
+  background-color:rgba(0,0,0,0.4);
+  padding: 20px;
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-top:5px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+}
+
+.legend {
+  position: absolute;
+  top:80px;
+  left:370px;
+  box-sizing: border-box;
+  z-index: 5000;
+  /*background-color: rgba(0, 0, 0, 0.5);*/
+}
+
+#sizing {
+  display: inline-block;
+  left: 35px;
+  position: absolute;
+  z-index: 4500;
+  width: 150px;
+  top: -5px;
+}
+
+.circle{
+  vertical-align: -webkit-baseline-middle;
+  display: inline-block;
+  border-radius: 100%;
+  background-color: rgba(0, 191, 255,0.7);
+}
+
+#gradient1{
+  background:linear-gradient(to right,dodgerblue,gold,#ff6d93);
+  left: 35px;
+  position: absolute;
+  height:20px;
+  width:150px;
+  border-radius: 4px;
+  z-index: 4500;
+}
+
+#gradient2{
+  background:linear-gradient(to right,rgb(36, 80, 191),rgb(40, 201, 136),greenyellow);
+  left:35px;
+  position: absolute;
+  height:20px;
+  width:150px;
+  border-radius: 4px;
+  z-index: 4500;
+}
+
+.legendText {
+  background: none;
+  border: none;
+  padding-top:4px;
+  font-weight: bold;
+}
+
+#textBox {
+  background: none;
+  width:225px;
+  display:inline-block;
+  font-size:12px;
+  position:absolute;
+  top:0px;
+  height: 25px;
+  /*border-radius: 4px;*/
+  /*background-color: rgba(255,255,255,0.9);*/
+  z-index: 4000;
+}
+
+#minText {
+  float:left;
+  width:40px;
+}
+#maxText {
+  float:right;
+  width: 40px;
+}
+
+.titleSelection {
+  height:40px;
+  background-color: rgba(0,0,0,0.4);
+  width: 100%;
+  z-index: 2000;
+  position: relative;
+  padding-left:15px;
+  padding-top:10px;
+  vertical-align: middle;
+  display: inline-block;
+  cursor: pointer;
+  border-radius: 4px;
+  margin-top: 5px;
+}
+
+
 #rightbar {
   right: 0px;
   width: 300px;
@@ -114,9 +235,35 @@ a {
     z-index: 2;
     float: left;
     width: 100%;
-    margin-top: 10px;
+    background-color: rgba(0,0,0,0);
+    border-style: none;
+    color:antiquewhite;
+    box-sizing: border-box;
+    font-family: sans-serif;
+    font-weight: lighter;
 }
 
+.form-control.number {
+  font-size: 20px;
+  font-weight: bold;
+  margin-top: 0px;
+  color: deepskyblue;
+}
+
+.input-group{
+  display: inline-block;
+  box-sizing: border-box;
+  background-color: rgba(0,0,0,0.2);
+  border-radius: 5px;
+  padding:10px;
+  margin-top: 10px;
+}
+
+
+
+.input{
+  background-color: inherit;
+}
 
 .filterSelection {
   position:relative;
@@ -127,7 +274,7 @@ a {
   background-color: rgba(0, 0, 0, 0.4);
   z-index: 5000;
   text-align: center;
-  padding: 25px;
+  padding: 20px;
   vertical-align:middle;
   cursor: pointer;
 }
@@ -137,12 +284,6 @@ a {
 }
 #filterSelection2{
   margin-right: 20px;
-}
-.num_rides {
-  border-radius: 5px;
-  text-align: center;
-  padding:5px;
-  width: 100px;
 }
 
 #filterSelection11 {
@@ -178,16 +319,18 @@ a {
   position:absolute;
   /*bottom:30px;*/
 }
+
 .subdiv {
   box-sizing: border-box;
 }
 
+
 .subBar {
-  position: absolute;
   left:7px;
   padding:25px;
   box-sizing: border-box;
-  background-color: rgba(0, 0, 0, 0.4);
+  /*background-color: rgba(0, 0, 0, 0.4);*/
+  display: inline-block;
 }
 
 .item {
@@ -243,7 +386,7 @@ a {
 
 #map > div.leaflet-control-container > div.leaflet-top.leaflet-left{
   position: relative;
-  top:60px;
+  top:80px;
   /*left: 360px;*/
   left:20px;
 }
@@ -273,21 +416,31 @@ a {
   border-radius: 4px;
   position:relative;
   left:30px;
-  top:250px;
+  top:200px;
   background-color: #fff;
   border-bottom: 1px solid #ccc;
   text-align: center;
+  font-size: 15px;
   text-decoration: none;
   color: #000;
+  border-style: solid;
+  border-color: rgba(0, 0, 0, 0.2);
 }
 
 .num_rides {
+  border-radius: 5px;
+  text-align: center;
+  padding:5px;
   width: 100px;
 }
 
 .minmax {
   width: 100px;
   margin-top:10px;
+  background-color: rgba(0,0,0,0.4);
+  border-radius: 4px;
+  border: solid 1px;
+  border-color: antiquewhite;
 }
 
 .button {
@@ -318,6 +471,11 @@ a {
   /*right: 0px;
   position: absolute;*/
 }*/
+
+#hideIt0{
+  cursor:pointer;
+  float: right;
+}
 
 #hideIt1{
   cursor:pointer;

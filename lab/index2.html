@@ -13,6 +13,10 @@
     <link rel="stylesheet" href="css/style.css" />
   </head>
   <body>
+    <!-- fullScreenModal -->
+    <div id="modal" class="map">
+      <button id="startMap">Start</button>
+    </div>
     <!-- topbar -->
     <div id="thintop" hidden="hidden">
       <span class="glyphicon glyphicon-chevron-down" aria-hidden="true" style="font-size:20px" id="menuDown"></span>
@@ -58,6 +62,19 @@
     </div>
     <!-- Sidebar -->
     <div class="sidebar" id="leftbar" hidden="hidden">
+      <div class="subdiv" id="maps" hidden="hidden">
+        <div class="barTitle" style="margin-left:7px">
+          <span class="glyphicon glyphicon-globe" aria-hidden="true" style="color:antiquewhite; font-size:25px"></span>
+          <h3 style="color:antiquewhite; vertical-align:middle">Maps</h3>
+          <span class="glyphicon glyphicon-remove-circle" aria-hidden="true" id="hideIt0" style="font-size:25px; color:rgba(250, 235, 215,0.5); float:right"></span>
+        </div>
+          <ul class="nav nav-pills nav-stacked" id="mapsChoice" hidden="hidden">
+            <li role="presentation" id="mapsChoice1" style="margin-bottom:5px; margin-left:20px; margin-right:20px"><a href="#">Departures/Arrivals</a></li>
+            <div class="discription" id="discription1" hidden="hidden">blahblahblah</div>
+            <li role="presentation" id="mapsChoice2" style="margin-bottom:5px; margin-left:20px; margin-right:20px"><a href="#">Round Trips Share</a></li>
+            <div class="discription" id="discription2" hidden="hidden">blahblahblah</div>
+          </ul>
+      </div>
       <div class="subdiv" id="macroStats" hidden="hidden">
         <!-- <h3>Macro Stats</h3>
         <span class="glyphicon glyphicon-remove-circle" aria-hidden="true" id="hideIt1" style="font-size:25px"></span> -->
@@ -68,17 +85,54 @@
         </div>
         <div class="subBar">
           <div class="input-group">
-          <input id="total" type="text"
-                 class="form-control"
-                 placeholder="Total Indego Rides in 2016"
-                 disabled>
-          <input id="mean" type="text"
-                class="form-control"
-                placeholder="Average Annual Rides Per Station"
-                disabled>
-          <button class="minmax" id="min">MIN</button>
-          <button class="minmax" id="max">MAX</button>
-        </div>
+            <input id="stationTotal" type="text"
+                   class="form-control"
+                   placeholder="Number of Indego Stations"
+                   style="margin-top:15px"
+                   disabled>
+           <input id="stationTotal1" type="text"
+                  class="form-control number"
+                  placeholder="Number of Indego Stations"
+                  disabled>
+           <input id="bikeTotal" type="text"
+                  class="form-control"
+                  placeholder="Number of Indego Bikes"
+                  style="margin-top:15px"
+                  disabled>
+            <input id="bikeTotal1" type="text"
+                   class="form-control number"
+                   placeholder="Number of Indego Bikes"
+                   disabled>
+            <input id="total" type="text"
+                   class="form-control"
+                   placeholder="Total Number of Indego Rides in 2016"
+                   style="margin-top:15px"
+                   disabled>
+           <input id="total1" type="text"
+                  class="form-control number"
+                  placeholder="Total Number of Indego Rides in 2016"
+                  disabled>
+            <input id="roundPer" type="text"
+                   class="form-control"
+                   placeholder="Round Trips Share"
+                   style="margin-top:15px"
+                   disabled>
+             <input id="roundPer1" type="text"
+                    class="form-control number"
+                    placeholder="Round Trips Share"
+                    disabled>
+            <input id="mean" type="text"
+                  class="form-control"
+                  placeholder="Average Annual Rides Per Station"
+                  style="margin-top:15px"
+                  disabled>
+            <input id="mean1" type="text"
+                   class="form-control number"
+                   placeholder="Average Annual Rides Per Station"
+                   disabled>
+            <button class="minmax" id="min">MIN</button>
+            <button class="minmax" id="max">MAX</button>
+          </div>
         </div>
       </div>
       <div class="subdiv" id="stationInfo" hidden="hidden">
@@ -88,48 +142,63 @@
           <span class="glyphicon glyphicon-remove-circle" aria-hidden="true" id="hideIt2" style="font-size:25px; color:rgba(250, 235, 215,0.5)"></span>
         </div>
         <div class="subBar">
-          <h4>Station Info</h4>
-          <div class="input-group">
-            <input id="station_id" type="text"
-                   class="form-control"
-                   placeholder="Station ID"
-                   disabled>
-            <input id="address" type="text"
-                  class="form-control"
-                  placeholder="Address"
-                  disabled>
-            <input id="zipcode" type="text"
-                 class="form-control"
-                 placeholder="Zipcode"
-                 disabled>
-            <input id="dockNumber" type="text"
-                  class="form-control"
-                  placeholder="Docking Capacity"
-                  disabled>
-          </div>
-          <div class="subdiv" id="indivStats" hidden="hidden">
-            <h4>Stats of Indego Rides</h4>
+          <div clas="subdiv" id="basicInfo" style="margin-bottom:15px">
+            <h5>Station Info</h5>
             <div class="input-group">
+              <input id="station_id" type="text"
+                     class="form-control"
+                     placeholder="Station ID"
+                     disabled>
+              <input id="address" type="text"
+                    class="form-control"
+                    placeholder="Address"
+                    disabled>
+              <input id="zipcode" type="text"
+                   class="form-control"
+                   placeholder="Zipcode"
+                   disabled>
+              <input id="dockNumber" type="text"
+                    class="form-control"
+                    placeholder="Docking Capacity"
+                    disabled>
+            </div>
+          </div>
+          <div class="subdiv" id="indivStats">
+            <div class="titleSelection" id="rideStats"><h5>Stats of Indego Rides</h4></div>
+            <div class="input-group" id="info1" hidden="hidden">
                <input id="total_num_rides" type="text"
                       class="form-control"
                       placeholder="Total Number of Rides"
                       disabled>
-              <input id="std_rides" type="text"
+                <input id="std_rides" type="text"
+                       class="form-control"
+                       placeholder="Standardized Number of Rides"
+                       disabled>
+                <input id="tll_per" type="text"
+                       class="form-control"
+                       placeholder="Share of All Indego Rides"
+                       disabled>
+                <input id="arrival" type="text"
+                       class="form-control"
+                       placeholder="Arrival"
+                       disabled>
+                 <input id="departure" type="text"
+                        class="form-control"
+                        placeholder="Departure"
+                        disabled>
+            </div>
+          </div>
+          <div class="subdiv" id="popularOD">
+            <div class="titleSelection" id="od"><h5>Popular Origin and Destination</h4></div>
+            <div class="input-group" id="info2" hidden="hidden">
+              <input id="origin_id" type="text"
                      class="form-control"
-                     placeholder="Standardized Number of Rides"
+                     placeholder="Origin No,1"
                      disabled>
-              <input id="tll_per" type="text"
-                     class="form-control"
-                     placeholder="Share of All Indego Rides"
-                     disabled>
-              <input id="arrival" type="text"
-                     class="form-control"
-                     placeholder="Arrival"
-                     disabled>
-               <input id="departure" type="text"
-                      class="form-control"
-                      placeholder="Departure"
-                      disabled>
+              <input id="destination_id" type="text"
+                    class="form-control"
+                    placeholder="Destination No.1"
+                    disabled>
             </div>
           </div>
         </div>
@@ -221,11 +290,29 @@
       <button id="refresh">
         <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
       </button>
+      <div class="legend">
+        <div id="gradient1" hidden="hidden"></div>
+        <div id="gradient2" hidden="hidden"></div>
+        <div id="sizing">
+          <div class="circle" style="height:6px;width:6px"></div>
+          <div class="circle" style="height:10px;width:10px"></div>
+          <div class="circle" style="height:14px;width:14px"></div>
+          <div class="circle" style="height:18px;width:18px"></div>
+          <div class="circle" style="height:22px;width:22px"></div>
+          <div class="circle" style="height:26px;width:26px"></div>
+          <div class="circle" style="height:32px;width:32px"></div>
+        </div>
+        <div id="textBox">
+          <input class="legendText" type="text" id="minText" disabled>
+          <input class="legendText" type="text" id="maxText" disabled>
+        </div>
+      </div>
       <!-- <div id="time-window"></div> -->
     </div>
     <!-- Javascript Imports -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="js/chroma.js"></script>
     <script src="js/underscore.js"></script>
     <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
     <!-- <script src="js/leaflet.js"></script> -->
@@ -234,6 +321,6 @@
     <script src="js/decode.js"></script>
     <script src="js/navigation2.js"></script>
     <script src="js/numStyle2.js"></script>
-    <script src="js/setup2.js"></script>
+    <script src="js/setup3.js"></script>
   </body>
 </html>

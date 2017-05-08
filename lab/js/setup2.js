@@ -152,6 +152,14 @@ var fillForm = function(properties) {
   var top10s=[];
 
 var general=function(){
+  app.jsonClient.execute("SELECT COUNT(*) FROM cleandata_all_geom_new")
+    .done(function(data) {
+      $('#capacity').val("Number of Indego Stations: " + data.rows[0].count);
+    });
+  app.jsonClient.execute("SELECT SUM(totaldocks) FROM cleandata_all_geom_new")
+    .done(function(data) {
+      $('#capacity1').val("Number of Indego Bikes: " + data.rows[0].sum);
+    });
   app.jsonClient.execute("SELECT SUM(total_num_rides) FROM cleandata_all_geom_new")
     .done(function(data) {
       $('#total').val("Total Indego Rides in 2016: " + data.rows[0].sum);
@@ -215,60 +223,70 @@ setLayer={
       //as startstation
       app.jsonClient.execute("SELECT start_lat,start_lon,end_lat,end_lon,start_station_id,end_station_id,count(*) AS count FROM indego_all_clean WHERE start_station_id="+feature.properties.station_id+"GROUP BY 1,2,3,4,5,6 ORDER BY count DESC LIMIT 1")
       .done(function(data){
-        mystart={"lat":data.rows[0].start_lat, "lon":data.rows[0].start_lon};
-        myend={"lat":data.rows[0].end_lat,"lon":data.rows[0].end_lon};
-        mylocation=[mystart,myend];
-        myObject = {
-          "locations": mylocation,
-          "costing":"bicycle",
-          "directions_options":{"units":"miles"}
-        };
-        myJSON = JSON.stringify(myObject);
-        myURL =
-        "https://matrix.mapzen.com/optimized_route?json=" + myJSON + "&api_key=mapzen-bE4GcSs";
-        routeResponse = $.ajax(myURL);
-        routeResponse.done(function(data){
-          myCoordinates = decode(data.trip.legs[0].shape);
-          if (myStartRoute!==undefined){
-            app.map.removeLayer(myStartRoute);
+        if(data.rows[0].start_lat!==data.rows[0].end_lat){
+          mystart={"lat":data.rows[0].start_lat, "lon":data.rows[0].start_lon};
+          myend={"lat":data.rows[0].end_lat,"lon":data.rows[0].end_lon};
+          mylocation=[mystart,myend];
+          myObject = {
+            "locations": mylocation,
+            "costing":"bicycle",
+            "directions_options":{"units":"miles"}
+          };
+          myJSON = JSON.stringify(myObject);
+          myURL =
+          "https://matrix.mapzen.com/optimized_route?json=" + myJSON + "&api_key=mapzen-bE4GcSs";
+          routeResponse = $.ajax(myURL);
+          routeResponse.done(function(data){
+            myCoordinates = decode(data.trip.legs[0].shape);
+            if (myStartRoute!==undefined){
+              app.map.removeLayer(myStartRoute);
+            }
+            myStartRoute=L.polyline(myCoordinates, {color:'gray'});
+            myStartRoute.addTo(app.map);
+          });
+          if (endMarker!==undefined){
+            app.map.removeLayer(endMarker);
           }
-          myStartRoute=L.polyline(myCoordinates, {color: '#f4d142'});
-          myStartRoute.addTo(app.map);
-        });
-        if (endMarker!==undefined){
-          app.map.removeLayer(endMarker);
+          endMarker=L.circleMarker([data.rows[0].end_lat,data.rows[0].end_lon],endStyle);
+          endMarker.addTo(app.map);
         }
-        endMarker=L.circleMarker([data.rows[0].end_lat,data.rows[0].end_lon],endStyle);
-        endMarker.addTo(app.map);
+        else{
+          console.log('roundtripStarter!');
+        }
       });
       //as endstation
       app.jsonClient.execute("SELECT start_lat,start_lon,end_lat,end_lon,start_station_id,end_station_id,count(*) AS count FROM indego_all_clean WHERE end_station_id="+feature.properties.station_id+"GROUP BY 1,2,3,4,5,6 ORDER BY count DESC LIMIT 1")
       .done(function(data){
-        mystart={"lat":data.rows[0].start_lat, "lon":data.rows[0].start_lon};
-        myend={"lat":data.rows[0].end_lat,"lon":data.rows[0].end_lon};
-        mylocation=[mystart,myend];
-        myObject = {
-          "locations": mylocation,
-          "costing":"bicycle",
-          "directions_options":{"units":"miles"}
-        };
-        myJSON = JSON.stringify(myObject);
-        myURL =
-        "https://matrix.mapzen.com/optimized_route?json=" + myJSON + "&api_key=mapzen-bE4GcSs";
-        routeResponse = $.ajax(myURL);
-        routeResponse.done(function(data){
-          myCoordinates = decode(data.trip.legs[0].shape);
-          if (myEndRoute!==undefined){
-            app.map.removeLayer(myEndRoute);
+        if(data.rows[0].start_lat!==data.rows[0].end_lat){
+          mystart={"lat":data.rows[0].start_lat, "lon":data.rows[0].start_lon};
+          myend={"lat":data.rows[0].end_lat,"lon":data.rows[0].end_lon};
+          mylocation=[mystart,myend];
+          myObject = {
+            "locations": mylocation,
+            "costing":"bicycle",
+            "directions_options":{"units":"miles"}
+          };
+          myJSON = JSON.stringify(myObject);
+          myURL =
+          "https://matrix.mapzen.com/optimized_route?json=" + myJSON + "&api_key=mapzen-bE4GcSs";
+          routeResponse = $.ajax(myURL);
+          routeResponse.done(function(data){
+            myCoordinates = decode(data.trip.legs[0].shape);
+            if (myEndRoute!==undefined){
+              app.map.removeLayer(myEndRoute);
+            }
+            myEndRoute=L.polyline(myCoordinates, {color: 'gray'});
+            myEndRoute.addTo(app.map);
+          });
+          if (startMarker!==undefined){
+            app.map.removeLayer(startMarker);
           }
-          myEndRoute=L.polyline(myCoordinates, {color: '#f4d142'});
-          myEndRoute.addTo(app.map);
-        });
-        if (startMarker!==undefined){
-          app.map.removeLayer(startMarker);
+          startMarker=L.circleMarker([data.rows[0].start_lat,data.rows[0].start_lon],startStyle);
+          startMarker.addTo(app.map);
         }
-        startMarker=L.circleMarker([data.rows[0].start_lat,data.rows[0].start_lon],startStyle);
-        startMarker.addTo(app.map);
+        else{
+          console.log('hahha');
+        }
       });
         // });
       //ends here
@@ -279,7 +297,7 @@ setLayer={
       $('#macroStats').hide();
       layer.setStyle(selectedStyle);
       if (theSelected) {
-        if (l.target._leaflet_id === theSelected._leaflet_id) { layer.setStyle(numStyle2(feature));}
+        if (l.target._leaflet_id===theSelected._leaflet_id) { layer.setStyle(numStyle2(feature));}
         else {theSelected.setStyle(numStyle2(theSelected.feature));}
         // theSelected = undefined;
         // // return;
@@ -373,19 +391,6 @@ setLayer={
           setDefault();
         });
   };
-
-  // var getTop10= function(){
-  //     app.jsonClient.execute("SELECT start_lat, start_lon, end_lat, end_lon,start_station_id, end_station_id, COUNT(*)AS count FROM indego_all_clean GROUP BY 1,2,3,4,5,6 ORDER BY count DESC LIMIT 10")
-  //     .done(function(data){
-  //       console.log(data);
-  //       _.each(data.rows,function(coordinates){
-  //        pair=L.polyline([[coordinates.start_lat,coordinates.start_lon],[coordinates.end_lat,coordinates.end_lon]], top10Style);
-  //        pair.addTo(app.map);
-  //        top10s.push(pair);
-  //      });
-  //     });
-  // };
-  // getTop10();
 
   var option;
   var roughExecution;
